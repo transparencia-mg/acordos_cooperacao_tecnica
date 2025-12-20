@@ -47,7 +47,7 @@ As informações seguem **padrões abertos**, garantindo reutilização, interop
 
 O dashboard está disponível publicamente em:
 
-👉 **[Link para o GitHub Pages do Repositório]**
+👉 **[(https://transparencia-mg.github.io/acordos_cooperacao_tecnica/)]**
 
 > Substitua o texto acima pelo URL real após a publicação.
 
