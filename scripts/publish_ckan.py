@@ -8,8 +8,8 @@ from ckanapi import RemoteCKAN
 
 CKAN_HOST = "https://www.dados.mg.gov.br"
 CKAN_KEY = os.environ.get("CKAN_KEY")
-DATASET = "empregados-terceirizados-mg"
-GITHUB_REPO = "transparencia-mg/empregados_terceirizados_mg"
+DATASET = "acordos-cooperacao-tecnica"
+GITHUB_REPO = "transparencia-mg/acordos-cooperacao-tecnica"
 GITHUB_BRANCH = "main"
 
 if not CKAN_KEY:
