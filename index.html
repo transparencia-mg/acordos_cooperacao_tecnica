@@ -2138,7 +2138,7 @@
             // Agrupar por órgão
             const grupos = {};
             filteredData.forEach(acordo => {
-                const orgao = acordo.orgao_acordo;
+    const orgao = (acordo.orgao_acordo || '').trim();
                 
                 if (!grupos[orgao]) {
                     grupos[orgao] = {
