@@ -1596,7 +1596,7 @@
             complete: function (results) {
 
                 console.log("Linhas brutas:", results.data.length);
-                console.log("Primeira linha:", results.data[0]);
+                console.log("CHAVES DA PRIMEIRA LINHA:", Object.keys(results.data[0]));
 
                 const dadosValidos = results.data.filter(row =>
                     Object.values(row).some(v => v && v.toString().trim() !== "")
