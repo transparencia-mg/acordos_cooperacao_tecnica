@@ -2199,30 +2199,30 @@
             // Gerar HTML da tabela
              const rowsHTML = currentData.map(item => {
 
-    // 🔒 Garantia de segurança
-    const orgaoSeguro = (item.orgao_acordo || 'Órgão não informado')
-        .replace(/'/g, "\\'");
+    const orgaoReal = item.orgao_acordo?.trim();
+    const orgaoExibicao = orgaoReal || 'Órgão não informado';
+    const orgaoSeguro = orgaoReal
+        ? orgaoReal.replace(/'/g, "\\'")
+        : null;
 
     return `
         <tr>
             <td>
-                <a href="#"
-                   onclick="filtrarPorOrgao('${orgaoSeguro}')"
-                   class="orgao-link"
-                   title="Clique para filtrar por este órgão">
-                    ${item.orgao_acordo || 'Órgão não informado'}
-                </a>
+                ${
+                    orgaoSeguro
+                    ? `<a href="#"
+                          onclick="filtrarPorOrgao('${orgaoSeguro}')"
+                          class="orgao-link"
+                          title="Clique para filtrar por este órgão">
+                          ${orgaoExibicao}
+                       </a>`
+                    : `<span class="text-muted">${orgaoExibicao}</span>`
+                }
             </td>
             <td>${item.total_acordos.toLocaleString('pt-BR')}</td>
-            <td>
-                <span class="badge-situacao badge-vigente">${item.vigentes}</span>
-            </td>
-            <td>
-                <span class="badge-situacao badge-concluido">${item.concluidos}</span>
-            </td>
-            <td>
-                <span class="badge-situacao badge-expirado">${item.expirados}</span>
-            </td>
+            <td><span class="badge-situacao badge-vigente">${item.vigentes}</span></td>
+            <td><span class="badge-situacao badge-concluido">${item.concluidos}</span></td>
+            <td><span class="badge-situacao badge-expirado">${item.expirados}</span></td>
         </tr>
     `;
 }).join('');
