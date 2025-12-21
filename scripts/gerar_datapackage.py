@@ -15,7 +15,7 @@ for csv in sorted(DATA_DIR.glob("acordos*.csv")):
     print(f"➕ Incluindo recurso: {csv.name}")
 
     resources.append({
-        "name": f"acordos-cooperacao-tecnica-{csv.stem}",
+        "name": f"acordos-cooperacao-tecnica",
         "title": "Acordos de Cooperação Técnica",
         "description": (
             "Acordos de cooperação técnica firmados pelos órgãos e entidades
