@@ -1,15 +1,3 @@
-name: Publicar dataset no CKAN (dados.mg.gov.br)
-
-on:
-  push:
-    branches: [main]
-    paths:
-      - "data/**"
-      - "datapackage/**"
-      - "README.md"
-      - "scripts/**"
-  workflow_dispatch:
-
 jobs:
   publish_ckan:
     runs-on: ubuntu-22.04
@@ -28,9 +16,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install ckanapi
 
+      - name: Gerar datapackage.json
+        run: |
+          python scripts/gerar_datapackage.py
+
       - name: Publicar dataset e recursos no CKAN
         env:
           CKAN_KEY: ${{ secrets.CKAN_KEY }}
         run: |
           python scripts/publish_ckan.py
-
