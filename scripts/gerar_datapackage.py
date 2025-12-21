@@ -38,9 +38,7 @@ for csv in csv_files:
         "name": "acordos-cooperacao-tecnica",
         "title": "Acordos de Cooperação Técnica – Base Consolidada",
         "description": (
-            "Conjunto de dados de acordos de cooperação técnica que não envolvem "
-            "transferência de recursos financeiros, firmados pelos órgãos e "
-            "entidades do Governo do Estado de Minas Gerais."
+            "Conjunto de dados de acordos de cooperação técnica que não envolvem transferência de recursos financeiros, firmados pelos órgãos e entidades do Governo do Estado de Minas Gerais."
         ),
         "path": f"data/{csv.name}",
         "format": "csv",
