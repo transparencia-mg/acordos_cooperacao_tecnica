@@ -1607,8 +1607,17 @@
                 ano: row.ano || '',
                 numero_termo: row.numero_termo || '',
                 numero_sei: row.numero_sei || '',
-                orgao_acordo: row.orgao_acordo || '',
-                parceiro_acordo: row.parceiro_acordo || '',
+                orgao_acordo:
+                    row.orgao_acordo ||
+                    row.orgao ||
+                    row['orgão'] ||
+                    row['orgao do governo'] ||
+                    '',
+                parceiro_acordo:
+                    row.parceiro_acordo ||
+                    row.parceiro ||
+                    row['instituicao parceira'] ||
+                    '',
                 objeto: row.objeto || '',
                 inicio_vigencia: row.inicio_vigencia || '',
                 fim_vigencia: row.fim_vigencia || '',
