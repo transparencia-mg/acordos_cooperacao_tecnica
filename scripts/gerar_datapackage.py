@@ -12,7 +12,7 @@ if not DATA_DIR.exists():
     print("❌ Pasta 'data/' não encontrada")
     sys.exit(1)
 
-csv_files = sorted(DATA_DIR.glob("acordos_cooperacao_tecnica*.csv"))
+csv_files = sorted(DATA_DIR.glob("acordos_cooperacao_tecnica.csv"))
 
 if not csv_files:
     print("❌ Nenhum arquivo CSV encontrado com padrão:")
