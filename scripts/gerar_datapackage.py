@@ -26,7 +26,7 @@ for f in csv_files:
     print(f"   - {f.name}")
 
 if not csv_files:
-    print("❌ ERRO: nenhum arquivo encontrado com padrão 'acordos_cooperacao_tecnica*.csv'")
+    print("❌ ERRO: nenhum arquivo encontrado com padrão 'acordos_cooperacao_tecnica.csv'")
     sys.exit(1)
 
 resources = []
@@ -73,9 +73,7 @@ datapackage = {
     "name": "acordos-cooperacao-tecnica",
     "title": "Acordos de Cooperação Técnica do Governo de Minas Gerais",
     "description": (
-        "Base de dados de acordos de cooperação técnica que não envolvem "
-        "transferência de recursos financeiros firmados pelos órgãos do "
-        "Governo de Minas Gerais."
+        "Base de dados de acordos de cooperação técnica que não envolvem transferência de recursos financeiros firmados pelos órgãos do Governo de Minas Gerais."
     ),
     "owner_org": "controladoria-geral-do-estado-cge",
     "license": "CC-BY-4.0",
