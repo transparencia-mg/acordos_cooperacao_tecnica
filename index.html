@@ -1575,70 +1575,47 @@
         });
 
         // ==================== CARREGAR DADOS DO GITHUB ====================
-        async function loadData() {
-            console.log('Carregando dados de:', GITHUB_CSV_URL);
+Papa.parse(GITHUB_CSV_URL, {
+    download: true,
+    header: true,
+    delimiter: ";",
+    encoding: "utf-8",
+    newline: "",
+    skipEmptyLines: "greedy",
 
-            return new Promise((resolve, reject) => {
-                Papa.parse(GITHUB_CSV_URL, {
-                    download: true,
-                    header: true,
-                    skipEmptyLines: true,
-                    encoding: 'UTF-8',
-                    complete: function (results) {
-                        const data = results.data
-                            .map(row => {
-                                // Normalizar dados
-                                const ano = row.ano || row['ANO'] || '';
-                                const numero_termo = row.numero_termo || row['NUMERO_TERMO'] || row['numero_termo'] || '';
-                                const numero_sei = row.numero_sei || row['NUMERO_SEI'] || row['numero_sei'] || '';
-                                const orgao_acordo = row.orgao_acordo || row['ORGAO_ACORDO'] || row['orgao_acordo'] || '';
-                                const parceiro_acordo = row.parceiro_acordo || row['PARCEIRO_ACORDO'] || row['parceiro_acordo'] || '';
-                                const objeto = row.objeto || row['OBJETO'] || row['objeto'] || '';
-                                const inicio_vigencia = row.inicio_vigencia || row['INICIO_VIGENCIA'] || row['inicio_vigencia'] || '';
-                                const fim_vigencia = row.fim_vigencia || row['FIM_VIGENCIA'] || row['fim_vigencia'] || '';
-                                const situacao = row.situacao || row['SITUACAO'] || row['situacao'] || '';
-                                const link_documento = row.link_documento || row['LINK_DOCUMENTO'] || row['link_documento'] || '';
-                                const numero_documento = row.numero_documento || row['NUMERO_DOCUMENTO'] || row['numero_documento'] || '';
+    // 🔧 NORMALIZA O CABEÇALHO (remove BOM, espaços, acentos e padroniza)
+    transformHeader: function (header) {
+        return header
+            .replace(/^\uFEFF/, "")     // remove BOM
+            .trim()                      // remove espaços
+            .toLowerCase()               // padroniza
+            .normalize("NFD")            // remove acentos
+            .replace(/[\u0300-\u036f]/g, "");
+    },
 
-                                return {
-                                    ano: ano.toString(),
-                                    numero_termo: numero_termo.toString(),
-                                    numero_sei: numero_sei.toString(),
-                                    orgao_acordo: orgao_acordo,
-                                    parceiro_acordo: parceiro_acordo,
-                                    objeto: objeto,
-                                    inicio_vigencia: formatDateForStorage(inicio_vigencia),
-                                    fim_vigencia: formatDateForStorage(fim_vigencia),
-                                    situacao: situacao.toUpperCase(),
-                                    link_documento: link_documento,
-                                    numero_documento: numero_documento.toString()
-                                };
-                            })
-                            .filter(row => row.ano && row.numero_termo); // Filtrar linhas vazias
+    complete: function (results) {
 
-                        acordosData = data;
-                        filteredData = [...data]; // Inicialmente, mostrar todos os dados
-                        
-                        // Organizar por ano
-                        allData = {};
-                        data.forEach(acordo => {
-                            if (!allData[acordo.ano]) {
-                                allData[acordo.ano] = [];
-                            }
-                            allData[acordo.ano].push(acordo);
-                        });
-                        
-                        console.log(`Dados carregados: ${data.length} acordos`);
-                        console.log(`Anos disponíveis: ${Object.keys(allData).join(', ')}`);
-                        resolve();
-                    },
-                    error: function (err) {
-                        console.error('Erro ao carregar dados:', err);
-                        reject(err);
-                    }
-                });
-            });
-        }
+        console.log("Linhas brutas:", results.data.length);
+        console.log("Primeira linha:", results.data[0]);
+
+        // 🔎 remove linhas totalmente vazias
+        const dados = results.data.filter(row =>
+            Object.values(row).some(v => v && v.toString().trim() !== "")
+        );
+
+        console.log("Linhas válidas:", dados.length);
+
+        // 🔴 DIAGNÓSTICO CRÍTICO: campo ano
+        const anosDetectados = [...new Set(dados.map(d => d.ano).filter(Boolean))];
+        console.log("Anos detectados:", anosDetectados);
+
+        inicializarDashboard(dados);
+    },
+
+    error: function (err) {
+        console.error("Erro ao carregar CSV:", err);
+    }
+});
 
         // ==================== FUNÇÕES DE UTILIDADE ====================
         function showLoading(show) {
