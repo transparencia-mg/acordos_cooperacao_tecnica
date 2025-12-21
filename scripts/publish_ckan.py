@@ -34,7 +34,7 @@ readme_text = readme_path.read_text(encoding="utf-8")
 print("📦 Atualizando dataset (descrição a partir do README.md)")
 ckan.action.package_update(
     name=DATASET,
-    title="Empregados Terceirizados do Governo de Minas Gerais",
+    title="Acordos de Cooperação Técnica",
     notes=readme_text,
     state="active"
 )
