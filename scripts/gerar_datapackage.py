@@ -3,30 +3,21 @@
 
 import json
 from pathlib import Path
-import sys
 
 DATA_DIR = Path("data")
 OUTPUT = Path("datapackage/datapackage.json")
 
-if not DATA_DIR.exists():
-    print("❌ Pasta 'data/' não encontrada")
-    sys.exit(1)
-
-csv_files = sorted(DATA_DIR.glob("acordos_cooperacao_tecnica.csv"))
-
-if not csv_files:
-    print("❌ Nenhum arquivo CSV encontrado com padrão:")
-    print("   acordos_cooperacao_tecnica*.csv")
-    sys.exit(1)
-
 resources = []
 
-for csv in csv_files:
+# 🔑 padrão robusto (igual ao de estagiários)
+for csv in sorted(DATA_DIR.glob("acordos_cooperacao_tecnica*.csv")):
     resources.append({
         "name": "acordos-cooperacao-tecnica",
         "title": "Acordos de Cooperação Técnica – Base Consolidada",
         "description": (
-            "Conjunto de dados de acordos de cooperação técnica que não envolvem transferência de recursos financeiros, firmados pelos órgãos e entidades do Governo do Estado de Minas Gerais."
+            "Conjunto de dados de acordos de cooperação técnica que não envolvem "
+            "transferência de recursos financeiros, firmados pelos órgãos e "
+            "entidades do Governo do Estado de Minas Gerais."
         ),
         "path": f"data/{csv.name}",
         "format": "csv",
@@ -55,7 +46,9 @@ datapackage = {
     "name": "acordos-cooperacao-tecnica",
     "title": "Acordos de Cooperação Técnica do Governo de Minas Gerais",
     "description": (
-        "Base de dados de acordos de cooperação técnica que não envolvem transferência de recursos financeiros firmados pelos órgãos do Governo de Minas Gerais."
+        "Base de dados de acordos de cooperação técnica que não envolvem "
+        "transferência de recursos financeiros firmados pelos órgãos do "
+        "Governo de Minas Gerais."
     ),
     "owner_org": "controladoria-geral-do-estado-cge",
     "license": "CC-BY-4.0",
@@ -69,4 +62,3 @@ OUTPUT.write_text(
 )
 
 print(f"✔ datapackage.json gerado com {len(resources)} recurso(s)")
-
