@@ -22,7 +22,9 @@ jobs:
       - name: Verificar datapackage
         run: |
           ls -l datapackage
+          echo "----------"
           cat datapackage/datapackage.json
+          echo "----------"
 
       - name: Publicar no CKAN
         env:
