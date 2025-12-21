@@ -18,8 +18,8 @@ for csv in sorted(DATA_DIR.glob("acordos*.csv")):
         "name": f"acordos-cooperacao-tecnica-{csv.stem}",
         "title": "Acordos de Cooperação Técnica",
         "description": (
-            "Acordos de cooperação técnica firmados pelos órgãos e entidades "
-            "do Governo do Estado de Minas Gerais, sem transferência de recursos financeiros."
+            "Acordos de cooperação técnica firmados pelos órgãos e entidades
+            do Governo do Estado de Minas Gerais, sem transferência de recursos financeiros."
         ),
         "path": f"data/{csv.name}",
         "format": "csv",
