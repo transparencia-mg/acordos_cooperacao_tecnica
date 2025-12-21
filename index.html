@@ -2190,9 +2190,24 @@
                 return `
                 <tr>
                     <td>
-                        <a href="#" onclick="filtrarPorOrgao('${item.orgao_acordo.replace(/'/g, "\\'")}')" class="orgao-link" title="Clique para filtrar por este órgão">
-                            ${item.orgao_acordo}
-                        </a>
+                        const orgaoSeguro = (item.orgao_acordo || 'Órgão não informado');
+
+return `
+<tr>
+    <td>
+        <a href="#"
+           onclick="filtrarPorOrgao('${orgaoSeguro.replace(/'/g, "\\'")}')"
+           class="orgao-link"
+           title="Clique para filtrar por este órgão">
+            ${orgaoSeguro}
+        </a>
+    </td>
+    <td>${item.total_acordos.toLocaleString('pt-BR')}</td>
+    <td><span class="badge-situacao badge-vigente">${item.vigentes}</span></td>
+    <td><span class="badge-situacao badge-concluido">${item.concluidos}</span></td>
+    <td><span class="badge-situacao badge-expirado">${item.expirados}</span></td>
+</tr>
+`;
                     </td>
                     <td>${item.total_acordos.toLocaleString('pt-BR')}</td>
                     <td>
