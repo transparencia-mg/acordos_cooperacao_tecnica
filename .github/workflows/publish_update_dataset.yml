@@ -5,6 +5,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -19,6 +21,12 @@ jobs:
       - name: Gerar datapackage.json
         run: |
           python scripts/gerar_datapackage.py
+
+      - name: Commit datapackage.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Atualiza datapackage.json automaticamente"
+          file_pattern: datapackage/datapackage.json
 
       - name: Publicar dataset e recursos no CKAN
         env:
