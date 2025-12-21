@@ -2186,41 +2186,35 @@
             const currentData = resumoArray.slice(startIndex, endIndex);
             
             // Gerar HTML da tabela
-            const rowsHTML = currentData.map(item => {
-                return `
-                <tr>
-                    <td>
-                        const orgaoSeguro = (item.orgao_acordo || 'Órgão não informado');
+             const rowsHTML = currentData.map(item => {
 
-return `
-<tr>
-    <td>
-        <a href="#"
-           onclick="filtrarPorOrgao('${orgaoSeguro.replace(/'/g, "\\'")}')"
-           class="orgao-link"
-           title="Clique para filtrar por este órgão">
-            ${orgaoSeguro}
-        </a>
-    </td>
-    <td>${item.total_acordos.toLocaleString('pt-BR')}</td>
-    <td><span class="badge-situacao badge-vigente">${item.vigentes}</span></td>
-    <td><span class="badge-situacao badge-concluido">${item.concluidos}</span></td>
-    <td><span class="badge-situacao badge-expirado">${item.expirados}</span></td>
-</tr>
-`;
-                    </td>
-                    <td>${item.total_acordos.toLocaleString('pt-BR')}</td>
-                    <td>
-                        <span class="badge-situacao badge-vigente">${item.vigentes}</span>
-                    </td>
-                    <td>
-                        <span class="badge-situacao badge-concluido">${item.concluidos}</span>
-                    </td>
-                    <td>
-                        <span class="badge-situacao badge-expirado">${item.expirados}</span>
-                    </td>
-                </tr>
-            `}).join('');
+    // 🔒 Garantia de segurança
+    const orgaoSeguro = (item.orgao_acordo || 'Órgão não informado')
+        .replace(/'/g, "\\'");
+
+    return `
+        <tr>
+            <td>
+                <a href="#"
+                   onclick="filtrarPorOrgao('${orgaoSeguro}')"
+                   class="orgao-link"
+                   title="Clique para filtrar por este órgão">
+                    ${item.orgao_acordo || 'Órgão não informado'}
+                </a>
+            </td>
+            <td>${item.total_acordos.toLocaleString('pt-BR')}</td>
+            <td>
+                <span class="badge-situacao badge-vigente">${item.vigentes}</span>
+            </td>
+            <td>
+                <span class="badge-situacao badge-concluido">${item.concluidos}</span>
+            </td>
+            <td>
+                <span class="badge-situacao badge-expirado">${item.expirados}</span>
+            </td>
+        </tr>
+    `;
+}).join('');
             
             // Gerar rodapé
             const footerHTML = `
