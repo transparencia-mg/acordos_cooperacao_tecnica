@@ -41,7 +41,6 @@ for csv in csv_files:
                 {"name": "orgao_acordo", "type": "string"},
                 {"name": "parceiro_acordo", "type": "string"},
                 {"name": "objeto", "type": "string"},
-                {"name": "natureza_cooperacao", "type": "string"},
                 {"name": "inicio_vigencia", "type": "string"},
                 {"name": "fim_vigencia", "type": "string"},
                 {"name": "situacao", "type": "string"},
