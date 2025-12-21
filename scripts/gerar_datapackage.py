@@ -22,13 +22,9 @@ if not csv_files:
 resources = []
 
 for csv in csv_files:
-    # tenta extrair ano do nome do arquivo
-    partes = csv.stem.split("_")
-    ano = partes[-1] if partes[-1].isdigit() else "geral"
-
     resources.append({
-        "name": f"acordos-cooperacao-tecnica-{ano}",
-        "title": f"Acordos de Cooperação Técnica – {ano.upper()}",
+        "name": "acordos-cooperacao-tecnica",
+        "title": "Acordos de Cooperação Técnica – Base Consolidada",
         "description": (
             "Conjunto de dados de acordos de cooperação técnica que não envolvem transferência de recursos financeiros, firmados pelos órgãos e entidades do Governo do Estado de Minas Gerais."
         ),
