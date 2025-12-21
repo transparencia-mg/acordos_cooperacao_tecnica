@@ -1546,7 +1546,7 @@
 
         // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
 
-        document.addEventListener('DOMContentLoaded', async function() {
+    document.addEventListener('DOMContentLoaded', async function () {
     console.log('=== INICIANDO DASHBOARD ACORDOS DE COOPERAÇÃO ===');
 
     showLoading(true);
@@ -1561,7 +1561,7 @@
         updateDashboard3();
         setupEventListeners();
 
-        console.log(`Dashboard inicializado com sucesso!`);
+        console.log('Dashboard inicializado com sucesso!');
         console.log(`Dados carregados: ${acordosData.length} acordos`);
 
     } catch (error) {
@@ -1572,40 +1572,67 @@
     }
 });
 
-
         // ==================== CARREGAR DADOS DO GITHUB ====================
 
-        complete: function (results) {
+    function loadData() {
+    return new Promise((resolve, reject) => {
 
-    console.log("Linhas brutas:", results.data.length);
-    console.log("Primeira linha:", results.data[0]);
+        Papa.parse(GITHUB_CSV_URL, {
+            download: true,
+            header: true,
+            delimiter: ";",
+            encoding: "utf-8",
+            skipEmptyLines: "greedy",
 
-    // Remove linhas vazias
-    const dadosValidos = results.data.filter(row =>
-        Object.values(row).some(v => v && v.toString().trim() !== "")
-    );
+            transformHeader: function (header) {
+                return header
+                    .replace(/^\uFEFF/, "")
+                    .trim()
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "");
+            },
 
-    // 🔁 NORMALIZA CAMPOS PARA O PADRÃO DO DASHBOARD
-    acordosData = dadosValidos.map(row => ({
-        ano: row.ano || '',
-        numero_termo: row['termo nº'] || row.termo || '',
-        numero_sei: row.sei || '',
-        orgao_acordo: row.orgao || '',
-        parceiro_acordo: row.parceiro || '',
-        objeto: row.objeto || '',
-        inicio_vigencia: row['inicio vigencia'] || '',
-        fim_vigencia: row['fim vigencia'] || '',
-        situacao: (row.situacao || '').toUpperCase(),
-        link_documento: row.detalhamento || '',
-        numero_documento: row.documento || ''
-    }));
+            complete: function (results) {
 
-    filteredData = [...acordosData];
+                console.log("Linhas brutas:", results.data.length);
+                console.log("Primeira linha:", results.data[0]);
 
-    console.log("Dados normalizados:", acordosData.length);
-    console.log("Exemplo normalizado:", acordosData[0]);
+                // Remove linhas vazias
+                const dadosValidos = results.data.filter(row =>
+                    Object.values(row).some(v => v && v.toString().trim() !== "")
+                );
+
+                // 🔁 NORMALIZA PARA O PADRÃO DO DASHBOARD
+                acordosData = dadosValidos.map(row => ({
+                    ano: row.ano || '',
+                    numero_termo: row['termo nº'] || row.termo || '',
+                    numero_sei: row.sei || '',
+                    orgao_acordo: row.orgao || '',
+                    parceiro_acordo: row.parceiro || '',
+                    objeto: row.objeto || '',
+                    inicio_vigencia: row['inicio vigencia'] || '',
+                    fim_vigencia: row['fim vigencia'] || '',
+                    situacao: (row.situacao || '').toUpperCase(),
+                    link_documento: row.detalhamento || '',
+                    numero_documento: row.documento || ''
+                }));
+
+                filteredData = [...acordosData];
+
+                console.log("Dados normalizados:", acordosData.length);
+                console.log("Exemplo normalizado:", acordosData[0]);
+
+                resolve();
+            },
+
+            error: function (err) {
+                console.error("Erro ao carregar CSV:", err);
+                reject(err);
+            }
+        });
+    });
 }
-
         
         // ==================== FUNÇÕES DE UTILIDADE ====================
         function showLoading(show) {
