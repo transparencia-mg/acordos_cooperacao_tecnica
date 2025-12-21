@@ -1,5 +1,3 @@
-# 📊 Acordos de Cooperação Técnica – Governo de Minas Gerais
-
 Dashboard interativo para **visualização, consulta e download de dados públicos** sobre **acordos de cooperação técnica não financeiros** celebrados pelos órgãos do Governo do Estado de Minas Gerais, com base em **arquivos CSV padronizados** e **publicação em dados abertos**.
 
 ---
