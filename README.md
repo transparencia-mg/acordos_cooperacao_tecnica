@@ -7,9 +7,6 @@ Dashboard interativo para **visualização, consulta e download de dados públic
 ## 🔍 Visão Geral
 
 Este projeto disponibiliza um **dashboard web público** para consulta e análise dos dados de acordos de cooperação técnica que **não envolvem recursos financeiros**.  
-A solução permite o acompanhamento transparente das parcerias institucionais firmadas pelo Estado, atendendo às diretrizes de **transparência pública** e **dados abertos**.
-
-As informações seguem **padrões abertos**, garantindo reutilização, interoperabilidade e consistência.
 
 ### Principais funcionalidades
 
@@ -53,21 +50,6 @@ Não é necessário login ou autenticação para acesso aos dados.
 
 ---
 
-## 🗂️ Estrutura dos Dados
-
-Os dados seguem uma **estrutura padronizada** para acordos de cooperação técnica **sem transferência de recursos financeiros**, alinhada com a legislação de transparência.
-
-### Observação importante
-
-Estes acordos são **exclusivamente de cooperação técnica**, **sem transferência de recursos financeiros**, envolvendo:
-
-- Compartilhamento de conhecimentos  
-- Capacitação  
-- Assistência técnica  
-- Cooperação institucional
-
----
-
 ## ⚙️ Atualização dos Dados
 
 A atualização do dashboard é **automática**, seguindo o fluxo de Dados Abertos do Governo de Minas Gerais:
@@ -91,30 +73,6 @@ Para solicitar abertura de novas bases ou relatar problemas, os cidadãos podem 
 
 Este projeto está alinhado à política de **Transparência Ativa** e **Dados Abertos** do Estado de Minas Gerais, que determina a divulgação de informações de interesse coletivo em **formatos abertos e legíveis por máquina**.
 
-A coordenação da política de dados abertos é realizada pela:
-
-- **:contentReference[oaicite:0]{index=0} (CGE-MG)**
-- **:contentReference[oaicite:1]{index=1} (SEPLAG-MG)**
-
-Os dados seguem boas práticas e padrões como **Frictionless Data**, garantindo:
-- Qualidade
-- Documentação adequada
-- Fácil reutilização por cidadãos, pesquisadores e sistemas
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
-- **Bibliotecas:**
-  - DataTables — tabelas interativas
-  - Chart.js — gráficos
-  - PapaParse — processamento de CSV
-- **Hospedagem e Versionamento:** GitHub Pages e Git
-- **Padrão de Dados:** CSV padronizado
-
----
-
 ## 📄 Licença
 
 Os dados e o código deste repositório são disponibilizados sob a licença:
@@ -125,18 +83,7 @@ Os dados e o código deste repositório são disponibilizados sob a licença:
 
 ---
 
-## 🏛️ Órgãos Responsáveis e Contexto
+## 🏛️ Órgãos Responsáveis
 
 - **Controladoria-Geral do Estado de Minas Gerais (CGE-MG)**  
   Órgão central do sistema de controle interno e responsável pela coordenação da política de dados abertos e transparência
-
-- **Secretaria de Estado de Planejamento e Gestão (SEPLAG-MG)**  
-  Responsável pela gestão das informações sobre contratos e parcerias e líder do processo de transformação digital no Estado
-
-### Contexto de Transparência
-
-A publicação detalhada desses dados atende às exigências legais e reforça o compromisso do Governo de Minas Gerais com:
-
-- Prestação de contas
-- Controle social
-- Transparência das parcerias institucionais
