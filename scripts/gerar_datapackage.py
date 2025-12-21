@@ -9,7 +9,7 @@ OUTPUT = Path("datapackage/datapackage.json")
 
 resources = []
 
-for csv in sorted(DATA_DIR.glob("estagiarios_*.csv")):
+for csv in sorted(DATA_DIR.glob("acordos_cooperacao_tecnica_*.csv")):
     ano = csv.stem.split("_")[-1]
 
     resources.append({
