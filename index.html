@@ -1596,7 +1596,7 @@
             complete: function (results) {
 
                 console.log("Linhas brutas:", results.data.length);
-                console.log("CHAVES DA PRIMEIRA LINHA:", Object.keys(results.data[0]));
+                Object.keys(results.data[0]).forEach(k => console.log("COLUNA CSV →", k));
 
                 const dadosValidos = results.data.filter(row =>
                     Object.values(row).some(v => v && v.toString().trim() !== "")
