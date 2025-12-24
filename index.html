@@ -2903,7 +2903,6 @@
                 // Determinar classe do badge
                 let badgeClass = 'modal-status-badge ';
                 let situacaoClass = '';
-                modal-status-badge
                 let statusIcon = '';
                 if (acordo.situacao === 'VIGENTE') {
                     situacaoClass = 'badge-vigente';
@@ -2934,7 +2933,7 @@
                         
                         <div class="info-card success">
                             <div class="info-label">Situação</div>
-                            <div class="${badgeClass}">
+                            <div class="${badgeClass} ${situacaoClass}">
                                 ${statusIcon} ${acordo.situacao}
                             </div>
                             <div class="info-label mt-2">Número SEI</div>
