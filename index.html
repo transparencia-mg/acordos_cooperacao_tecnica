@@ -2902,20 +2902,14 @@
                 
                 // Determinar classe do badge
                 let badgeClass = 'modal-status-badge ';
-                let situacaoClass = '';
-                let statusIcon = '';
                 if (acordo.situacao === 'VIGENTE') {
-                    situacaoClass = 'badge-vigente';
-                    statusIcon = '<i class="fas fa-check-circle"></i>';
+                    badgeClass += 'badge-vigente';
                 } else if (acordo.situacao === 'ENCERRADO') {
-                    situacaoClass = 'badge-encerrado';
-                    statusIcon = '<i class="fas fa-flag-checkered"></i>';
+                    badgeClass += 'badge-encerrado';
                 } else if (acordo.situacao === 'RESCINDIDO') {
-                    situacaoClass = 'badge-rescindido';
-                    statusIcon = '<i class="fas fa-times-circle"></i>';
+                    badgeClass += 'badge-rescindido';
                 } else {
-                    situacaoClass = 'badge-encerrado';
-                    statusIcon = '<i class="fas fa-question-circle"></i>';
+                    badgeClass += 'badge-encerrado';
                 }
                 
                 // Atualizar modal
@@ -2933,7 +2927,7 @@
                         
                         <div class="info-card success">
                             <div class="info-label">Situação</div>
-                            <div class="${badgeClass} ${situacaoClass}">
+                            <div class="${badgeClass}">
                                 ${statusIcon} ${acordo.situacao}
                             </div>
                             <div class="info-label mt-2">Número SEI</div>
