@@ -2902,18 +2902,20 @@
                 
                 // Determinar classe do badge
                 let badgeClass = 'modal-status-badge ';
+                let situacaoClass = '';
+                modal-status-badge
                 let statusIcon = '';
                 if (acordo.situacao === 'VIGENTE') {
-                    badgeClass += 'badge-vigente';
+                    situacaoClass = 'badge-vigente';
                     statusIcon = '<i class="fas fa-check-circle"></i>';
                 } else if (acordo.situacao === 'ENCERRADO') {
-                    badgeClass += 'badge-encerrado';
+                    situacaoClass = 'badge-encerrado';
                     statusIcon = '<i class="fas fa-flag-checkered"></i>';
                 } else if (acordo.situacao === 'RESCINDIDO') {
-                    badgeClass += 'badge-rescindido';
+                    situacaoClass = 'badge-rescindido';
                     statusIcon = '<i class="fas fa-times-circle"></i>';
                 } else {
-                    badgeClass += 'badge-encerrado';
+                    situacaoClass = 'badge-encerrado';
                     statusIcon = '<i class="fas fa-question-circle"></i>';
                 }
                 
