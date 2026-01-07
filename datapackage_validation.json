@@ -1,11 +1,11 @@
 {
   "version": "4.16.6",
-  "time": 0.053,
+  "time": 0.062,
   "errors": [],
   "tasks": [
     {
       "resource": {
-        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "description": "Dados públicos sobre acordos de cooperação técnica não financeiros celebrados pelos órgãos do Governo do Estado de Minas Gerais",
         "dialect": {
           "delimiter": ";"
         },
@@ -64,7 +64,7 @@
           ]
         },
         "scheme": "file",
-        "title": "Insira um título humanamente legível para este recurso.",
+        "title": "Acordos de Cooperacao Tecnica",
         "stats": {
           "hash": "1ed2b05e2aafd13987306feeb39d9c31",
           "bytes": 377845,
@@ -72,7 +72,7 @@
           "rows": 713
         }
       },
-      "time": 0.041,
+      "time": 0.048,
       "scope": [
         "hash-count-error",
         "byte-count-error",
