@@ -4,7 +4,7 @@
   "profile": "data-package",
   "resources": [
     {
-      "description": "Insira a descrição/explicação detalhada deste recurso.",
+      "description": "Dados públicos sobre acordos de cooperação técnica não financeiros celebrados pelos órgãos do Governo do Estado de Minas Gerais",
       "dialect": {
         "delimiter": ";"
       },
@@ -63,7 +63,7 @@
         ]
       },
       "scheme": "file",
-      "title": "Insira um título humanamente legível para este recurso."
+      "title": "Acordos de Cooperacao Tecnica"
     }
   ],
   "title": "Acordos_cooperacao_tecnica"
