@@ -1,0 +1,40 @@
+name: acordos_cooperacao_tecnica
+owner_org: controladoria-geral-do-estado-cge
+profile: data-package
+resources:
+  - description: Insira a descrição/explicação detalhada deste recurso.
+    dialect:
+      delimiter: ;
+    encoding: utf-8-sig
+    format: csv
+    hashing: md5
+    name: acordos_cooperacao_tecnica
+    path: data/acordos_cooperacao_tecnica.csv
+    profile: tabular-data-resource
+    schema:
+      fields:
+        - name: ano
+          type: integer
+        - name: numero_termo
+          type: string
+        - name: numero_sei
+          type: string
+        - name: orgao_acordo
+          type: string
+        - name: parceiro_acordo
+          type: string
+        - name: objeto
+          type: string
+        - name: inicio_vigencia
+          type: datetime
+        - name: fim_vigencia
+          type: string
+        - name: situacao
+          type: string
+        - name: link_documento
+          type: string
+        - name: numero_documento
+          type: any
+    scheme: file
+    title: Insira um título humanamente legível para este recurso.
+title: Acordos_cooperacao_tecnica
