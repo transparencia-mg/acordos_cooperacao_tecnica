@@ -1,0 +1,234 @@
+{
+  "version": "4.16.6",
+  "time": 0.053,
+  "errors": [],
+  "tasks": [
+    {
+      "resource": {
+        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "dialect": {
+          "delimiter": ";"
+        },
+        "encoding": "utf-8-sig",
+        "format": "csv",
+        "hashing": "md5",
+        "name": "acordos_cooperacao_tecnica",
+        "path": "data/acordos_cooperacao_tecnica.csv",
+        "profile": "tabular-data-resource",
+        "schema": {
+          "fields": [
+            {
+              "name": "ano",
+              "type": "integer"
+            },
+            {
+              "name": "numero_termo",
+              "type": "string"
+            },
+            {
+              "name": "numero_sei",
+              "type": "string"
+            },
+            {
+              "name": "orgao_acordo",
+              "type": "string"
+            },
+            {
+              "name": "parceiro_acordo",
+              "type": "string"
+            },
+            {
+              "name": "objeto",
+              "type": "string"
+            },
+            {
+              "name": "inicio_vigencia",
+              "type": "datetime"
+            },
+            {
+              "name": "fim_vigencia",
+              "type": "string"
+            },
+            {
+              "name": "situacao",
+              "type": "string"
+            },
+            {
+              "name": "link_documento",
+              "type": "string"
+            },
+            {
+              "name": "numero_documento",
+              "type": "any"
+            }
+          ]
+        },
+        "scheme": "file",
+        "title": "Insira um título humanamente legível para este recurso.",
+        "stats": {
+          "hash": "1ed2b05e2aafd13987306feeb39d9c31",
+          "bytes": 377845,
+          "fields": 11,
+          "rows": 713
+        }
+      },
+      "time": 0.041,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [
+        {
+          "cell": "-",
+          "fieldName": "inicio_vigencia",
+          "fieldNumber": 7,
+          "fieldPosition": 7,
+          "cells": [
+            "2023",
+            "6",
+            "1370.01.0060513/2022-90",
+            "AGENCIA DE DESENVOLVIMENTO DA REGIAO METROPOLITANA DE BELO HORIZONTE",
+            "SECRETARIA DE ESTADO DE MEIO AMBIENTE E DESENVOLVIMENTO SUSTENTAVEL",
+            "Implementar o Programa AmbientAÇÃO nas edificações onde se instala a AGÊNCIA DE DESENVOLVIMENTO DA REGIÃO METROPOLITANA DE BELO HORIZONTE - ARMBH, nas dependências da Cidade Administrativa do Estado de Minas Gerais, em Belo Horizonte, visando formar uma cultura organizacional que incentive o questionamento crítico e emancipador dos colaboradores em relação à dimensão ambiental de seus impactos no mundo, bem como seu potencial de reduzi-los, de modo a contribuir para a melhoria dos indicadores de gestão e de educação ambiental, no âmbito da edificação e, consequentemente em sentido amplo, no território do estado de Minas Gerais.",
+            "-",
+            "-",
+            "Vigente",
+            "https://nuvem.cge.mg.gov.br/index.php/s/NqMSDeM5bgjfQSD/download?path=%2FAGENCIA%20ARMBH&files=1370.01.0060513_2022-90.pdf",
+            ""
+          ],
+          "rowNumber": 371,
+          "rowPosition": 372,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"datetime/default\"",
+          "message": "Type error in the cell \"-\" in row \"372\" and field \"inicio_vigencia\" at position \"7\": type is \"datetime/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
+          "cell": "-",
+          "fieldName": "inicio_vigencia",
+          "fieldNumber": 7,
+          "fieldPosition": 7,
+          "cells": [
+            "2023",
+            "3",
+            "2430.01.0000340/2023-32",
+            "AGENCIA DE DESENVOLVIMENTO DA REGIAO METROPOLITANA DE BELO HORIZONTE",
+            "MUNICIPIO DE RAPOSOS",
+            "Intercâmbio de informações na temática de Regularização Fundiária Urbana – REURB – e Habitação de Interesse Social, com vistas a tornar mais eficazes os procedimentos adotados pelo MUNICÍPIO DE RAPOSOS em seu território, em especial na área identificada como Bairro Morro das Bicas, de modo a proporcionar celeridade e adequada aplicação destes instrumentos de ordenação territorial, com vistas a ampliar o atendimento aos beneficiários das políticas urbanas de acesso à moradia formal e favorecer o desenvolvimento socioeconômico do município.",
+            "-",
+            "-",
+            "Vigente",
+            "https://nuvem.cge.mg.gov.br/index.php/s/NqMSDeM5bgjfQSD/download?path=%2FAGENCIA%20ARMBH&files=2430.01.0000340_2023-32.pdf",
+            ""
+          ],
+          "rowNumber": 376,
+          "rowPosition": 377,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"datetime/default\"",
+          "message": "Type error in the cell \"-\" in row \"377\" and field \"inicio_vigencia\" at position \"7\": type is \"datetime/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
+          "cell": "-",
+          "fieldName": "inicio_vigencia",
+          "fieldNumber": 7,
+          "fieldPosition": 7,
+          "cells": [
+            "2025",
+            "S/N",
+            "1410.01.0000401/2020-62",
+            "SECRETARIA DE ESTADO DE CULTURA E TURSMO",
+            "INSTITUTO BRASILEIRO DE MUSEUS - IBRAM",
+            "Termo de Reciprocidade tem por objeto estabelecer a cooperação mútua, visando promover ações conjuntas, compatíveis com os propósitos institucionais e as competências de cada uma das Partes, para realização do Registro de Museus em âmbito estadual.",
+            "-",
+            "-",
+            "Vigente",
+            "https://nuvem.cge.mg.gov.br/index.php/s/NqMSDeM5bgjfQSD/download?path=%2FSECULT&files=Termo%20de%20Reciprocidade%20-%20INSTITUTO%20BRASILEIRO%20DE%20MUSEUS%20%E2%80%93%20IBRAM.pdf",
+            ""
+          ],
+          "rowNumber": 705,
+          "rowPosition": 706,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"datetime/default\"",
+          "message": "Type error in the cell \"-\" in row \"706\" and field \"inicio_vigencia\" at position \"7\": type is \"datetime/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
+          "cell": "-",
+          "fieldName": "inicio_vigencia",
+          "fieldNumber": 7,
+          "fieldPosition": 7,
+          "cells": [
+            "2024",
+            "S/N",
+            "1080.01.0052901/2024-20",
+            "AGENCIA DE DESENVOLVIMENTO DA REGIAO METROPOLITANA DE BELO HORIZONTE",
+            "MINISTERIO PUBLICO FEDERAL; MINISTERIO PUBLICO DE MINAS GERAIS; UNIAO; MUNICIPIO DE BELO HORIZONTE; MUNICIPIO DE NOVA LIMA, INSTITUTO ESTADUAL DE FLORESTAS",
+            "Troca de informações e documentos entre os partícipes para uma eventual transferência de patrimônio da União para municípios da Região Metropolitana de Belo Horizonte.",
+            "-",
+            "-",
+            "Vigente",
+            "https://drive.google.com/drive/folders/14d-itxHErzNiEQPG1whrAWQOARICmpak",
+            ""
+          ],
+          "rowNumber": 706,
+          "rowPosition": 707,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"datetime/default\"",
+          "message": "Type error in the cell \"-\" in row \"707\" and field \"inicio_vigencia\" at position \"7\": type is \"datetime/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        }
+      ],
+      "stats": {
+        "errors": 4
+      },
+      "valid": false
+    }
+  ],
+  "stats": {
+    "errors": 4,
+    "tasks": 1
+  },
+  "valid": false
+}
