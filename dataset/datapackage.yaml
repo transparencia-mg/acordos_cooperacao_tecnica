@@ -2,7 +2,7 @@ name: acordos_cooperacao_tecnica
 owner_org: controladoria-geral-do-estado-cge
 profile: data-package
 resources:
-  - description: Insira a descrição/explicação detalhada deste recurso.
+  - description: Dados públicos sobre acordos de cooperação técnica não financeiros celebrados pelos órgãos do Governo do Estado de Minas Gerais
     dialect:
       delimiter: ;
     encoding: utf-8-sig
@@ -36,5 +36,5 @@ resources:
         - name: numero_documento
           type: any
     scheme: file
-    title: Insira um título humanamente legível para este recurso.
+    title: Acordos de Cooperacao Tecnica
 title: Acordos_cooperacao_tecnica
