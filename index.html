@@ -34,7 +34,7 @@
         
         /* ==================== ESTILOS GERAIS ==================== */
         body {
-            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 30px;
         }
@@ -1097,12 +1097,12 @@
                     </div>
                     <div>
                         <h1 class="header-title">Acordos de Cooperação Técnica - MG</h1>
-                        <p class="header-subtitle">Governo do Estado de Minas Gerais - Dados de Acordos de Cooperação Técnica</p>
+                        <p class="header-subtitle">Governo do Estado de Minas Gerais - Dados de Acordos e Convênios</p>
                         <div class="header-info">
                             <a href="https://dados.mg.gov.br/" target="_blank" class="link-legislacao">
                                 <i class="fas fa-external-link-alt"></i> Portal de Dados Abertos MG
                             </a>
-                            <a href="https://github.com/transparencia-mg/acordos_cooperacao_tecnica" target="_blank" class="link-legislacao">
+                            <a href="https://github.com/transparencia-mg/estagiarios" target="_blank" class="link-legislacao">
                                 <i class="fab fa-github"></i> Repositório GitHub
                             </a>
                             <span class="badge-atualizacao-header">
@@ -1705,8 +1705,8 @@
             danger: '#E74C3C'
         };
 
-        // URL do CSV no GitHub
-        const GITHUB_CSV_URL = 'data/acordos_cooperacao_tecnica.csv';
+        // URL do CSV no GitHub - CORRIGIDA
+        const GITHUB_CSV_URL = 'https://raw.githubusercontent.com/transparencia-mg/acordos_cooperacao_tecnica/main/dataset/data/acordos_cooperacao_tecnica.csv';
 
         // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
 
@@ -2895,76 +2895,107 @@
         window.handleDetalhesClick = function (btn) {
             const id = btn.getAttribute('data-id');
 
-        if (!id) {
-            console.error('Botão sem data-id', btn);
-            return;
-        }
+            if (!id) {
+                console.error('Botão sem data-id', btn);
+                return;
+            }
 
-        showAcordoDetails(id);
+            showAcordoDetails(id);
         };    
 
         window.showAcordoDetails = function (id) {
-    showLoading(true);
+            showLoading(true);
 
-    try {
-        const acordo = acordosData.find(a => a.__id === id);
+            try {
+                const acordo = acordosData.find(a => a.__id === id);
 
-        if (!acordo) {
-            throw new Error('Acordo não encontrado para o ID: ' + id);
-        }
+                if (!acordo) {
+                    throw new Error('Acordo não encontrado para o ID: ' + id);
+                }
 
-        const situacao = (acordo.situacao || '').toUpperCase();
+                // CORREÇÃO: Usar a situação já normalizada do objeto acordo
+                const situacao = acordo.situacao || '';
 
-        let badgeClass = 'modal-status-badge ';
-        let statusIcon = '';
+                let badgeClass = 'modal-status-badge ';
+                let statusIcon = '';
 
-        if (situacao === 'VIGENTE') {
-            badgeClass += 'badge-vigente';
-            statusIcon = '<i class="fas fa-check-circle"></i>';
-        } else if (situacao === 'ENCERRADO') {
-            badgeClass += 'badge-encerrado';
-            statusIcon = '<i class="fas fa-flag-checkered"></i>';
-        } else if (situacao === 'RESCINDIDO') {
-            badgeClass += 'badge-rescindido';
-            statusIcon = '<i class="fas fa-times-circle"></i>';
-        } else {
-            badgeClass += 'badge-encerrado';
-            statusIcon = '<i class="fas fa-question-circle"></i>';
-        }
+                if (situacao === 'VIGENTE') {
+                    badgeClass += 'badge-vigente';
+                    statusIcon = '<i class="fas fa-check-circle"></i>';
+                } else if (situacao === 'ENCERRADO') {
+                    badgeClass += 'badge-encerrado';
+                    statusIcon = '<i class="fas fa-flag-checkered"></i>';
+                } else if (situacao === 'RESCINDIDO') {
+                    badgeClass += 'badge-rescindido';
+                    statusIcon = '<i class="fas fa-times-circle"></i>';
+                } else {
+                    badgeClass += 'badge-encerrado';
+                    statusIcon = '<i class="fas fa-question-circle"></i>';
+                }
 
-        document.getElementById('detailModalLabel').innerHTML =
-            `<i class="fas fa-file-contract me-2"></i>Acordo ${acordo.numero_termo} (${acordo.ano})`;
+                document.getElementById('detailModalLabel').innerHTML =
+                    `<i class="fas fa-file-contract me-2"></i>Acordo ${acordo.numero_termo} (${acordo.ano})`;
 
-        document.getElementById('acordoInfo').innerHTML = `
-            <div class="info-grid">
-                <div class="info-card primary">
-                    <div class="info-label">Número do Termo</div>
-                    <div class="info-value highlight">${acordo.numero_termo}</div>
-                    <div class="info-label mt-2">Ano</div>
-                    <div class="info-value">${acordo.ano}</div>
-                </div>
+                document.getElementById('acordoInfo').innerHTML = `
+                    <div class="info-grid">
+                        <div class="info-card primary">
+                            <div class="info-label">Número do Termo</div>
+                            <div class="info-value highlight">${acordo.numero_termo}</div>
+                            <div class="info-label mt-2">Ano</div>
+                            <div class="info-value">${acordo.ano}</div>
+                        </div>
 
-                <div class="info-card success">
-                    <div class="info-label">Situação</div>
-                    <div class="${badgeClass}">
-                        ${statusIcon} ${situacao}
+                        <div class="info-card success">
+                            <div class="info-label">Situação</div>
+                            <div class="${badgeClass}">
+                                ${statusIcon} ${situacao}
+                            </div>
+                            <div class="info-label mt-2">Número SEI</div>
+                            <div class="info-value">${acordo.numero_sei || '-'}</div>
+                        </div>
+
+                        <div class="info-card warning">
+                            <div class="info-label">Órgão do Governo</div>
+                            <div class="info-value">${acordo.orgao_acordo || '-'}</div>
+                            <div class="info-label mt-2">Instituição Parceira</div>
+                            <div class="info-value">${acordo.parceiro_acordo || '-'}</div>
+                        </div>
+
+                        <div class="info-card info">
+                            <div class="info-label">Início da Vigência</div>
+                            <div class="info-value">${formatDate(acordo.inicio_vigencia)}</div>
+                            <div class="info-label mt-2">Fim da Vigência</div>
+                            <div class="info-value">${formatDate(acordo.fim_vigencia)}</div>
+                        </div>
                     </div>
-                    <div class="info-label mt-2">Número SEI</div>
-                    <div class="info-value">${acordo.numero_sei || '-'}</div>
-                </div>
-            </div>
-        `;
 
-        new bootstrap.Modal(document.getElementById('detailModal')).show();
+                    <div class="objeto-container">
+                        <h5 class="objeto-title">
+                            <i class="fas fa-file-alt"></i> Objeto do Acordo
+                        </h5>
+                        <div class="objeto-text">
+                            ${acordo.objeto || 'Objeto não informado.'}
+                        </div>
+                    </div>
 
-    } catch (error) {
-        console.error(error);
-        showError('Erro ao carregar detalhes do acordo.');
-    } finally {
-        showLoading(false);
-    }
-};
+                    ${acordo.link_documento ? `
+                    <div class="mt-4 text-center">
+                        <a href="${acordo.link_documento}" target="_blank" class="btn-primary-custom">
+                            <i class="fas fa-external-link-alt me-2"></i> Acessar Documento
+                        </a>
+                    </div>
+                    ` : ''}
+                `;
 
+                new bootstrap.Modal(document.getElementById('detailModal')).show();
+
+            } catch (error) {
+                console.error(error);
+                showError('Erro ao carregar detalhes do acordo.');
+            } finally {
+                showLoading(false);
+            }
+        };
         
         // ==================== DASHBOARD 3: DOWNLOADS ====================
         function updateDashboard3() {
