@@ -8,7 +8,8 @@
     <!-- ==================== ESTILOS E BIBLIOTECAS ==================== -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
@@ -22,6 +23,7 @@
             --primary-darker: #0E2F44;
             --accent-blue: #3498DB;
             --accent-bright: #2980B9;
+            --accent-red: #E74C3C; /* CORRIGIDO: Variável adicionada */
             --background-light: #F2F4F7;
             --success-green: #27AE60;
             --warning-yellow: #F39C12;
@@ -34,7 +36,7 @@
         
         /* ==================== ESTILOS GERAIS ==================== */
         body {
-            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 30px;
         }
@@ -263,6 +265,7 @@
             overflow: hidden;
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
             margin-bottom: 20px;
+            border: 1px solid #dee2e6;
         }
         
         .table-header {
@@ -283,7 +286,7 @@
         }
         
         .table-badge {
-            background: var(--accent-blue);
+            background: var(--accent-red);
             color: white;
             padding: 4px 12px;
             border-radius: 15px;
@@ -304,11 +307,12 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            background-color: #f8f9fa !important;
+            background-color: var(--primary-dark) !important;
         }
         
         .table-fixed-header-container table thead th {
-            background-color: #f8f9fa !important;
+            background-color: var(--primary-dark) !important;
+            color: white !important;
             position: sticky;
             top: 0;
             z-index: 20;
@@ -325,11 +329,13 @@
             font-size: 13px;
             border-collapse: separate;
             border-spacing: 0;
+            border: 1px solid #dee2e6;
         }
         
+        /* Adicionar bordas verticais ao cabeçalho da tabela */
         .table thead th {
-            background-color: #f8f9fa !important;
-            color: var(--primary-dark);
+            background-color: var(--primary-dark) !important;
+            color: white !important;
             font-weight: 600;
             border: none;
             padding: 12px 10px;
@@ -343,17 +349,28 @@
             top: 0;
             z-index: 20;
             white-space: nowrap;
+            border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+        
+        .table thead th:first-child {
+            border-left: none !important;
+        }
+        
+        .table thead th:last-child {
+            border-right: none !important;
         }
         
         .sort-icon {
-            opacity: 0.5;
+            opacity: 0.8;
             margin-left: 4px;
             font-size: 9px;
             transition: opacity 0.2s ease;
+            color: white;
         }
         
         .table thead th:hover {
-            background-color: #f1f3f5 !important;
+            background-color: var(--primary-darker) !important;
         }
         
         .table thead th:hover .sort-icon {
@@ -373,19 +390,51 @@
             content: "↓";
         }
         
-        .table tbody tr {
-            transition: background-color 0.2s ease;
+        /* Aplicar bordas verticais a TODAS as tabelas */
+        .table-container table th, 
+        .table-container table td {
+            border-left: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            vertical-align: middle;
+        }
+        
+        .table-container table th:first-child,
+        .table-container table td:first-child {
+            border-left: none;
+        }
+        
+        .table-container table th:last-child,
+        .table-container table td:last-child {
+            border-right: none;
+        }
+        
+        /* Borda inferior para linhas */
+        .table-container table tbody tr {
             border-bottom: 1px solid #f1f1f1;
         }
         
+        .table-container table tbody tr:last-child {
+            border-bottom: none;
+        }
+        
+        .table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+        
         .table tbody tr:hover {
-            background-color: rgba(26, 82, 118, 0.04);
+            background-color: rgba(41, 67, 90, 0.04);
         }
         
         .table tbody td {
             padding: 12px 10px;
             vertical-align: middle;
             font-size: 13px;
+        }
+        
+        /* Coluna de quantidade centralizada */
+        .table tbody td.quantidade {
+            text-align: center;
+            font-weight: 600;
         }
         
         /* Coluna de ações na tabela */
@@ -1087,41 +1136,31 @@
 </head>
 <body>
 
-    <!-- ==================== HEADER PRINCIPAL ==================== -->
-    <header class="main-header">
+    <!-- ==================== HEADER ==================== -->
+    <div class="main-header">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="logo-container">
-                    <div class="logo">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <div>
-                        <h1 class="header-title">Acordos de Cooperação Técnica - MG</h1>
-                        <p class="header-subtitle">Governo do Estado de Minas Gerais - Dados de Acordos e Convênios</p>
-                        <div class="header-info">
-                            <a href="https://dados.mg.gov.br/" target="_blank" class="link-legislacao">
-                                <i class="fas fa-external-link-alt"></i> Portal de Dados Abertos MG
-                            </a>
-                            <a href="https://github.com/transparencia-mg/estagiarios" target="_blank" class="link-legislacao">
-                                <i class="fab fa-github"></i> Repositório GitHub
-                            </a>
-                            <span class="badge-atualizacao-header">
-                                <i class="fas fa-sync-alt"></i> Última atualização: <span id="data-atualizacao-header">Carregando...</span>
-                            </span>
-                        </div>
-                    </div>
+            <div class="logo-container">
+                <div class="logo">
+                    MG
                 </div>
-                
-                <!-- Informação de Fonte de Dados -->
-                <div class="text-end">
-                    <div class="btn-export" style="background: rgba(255, 255, 255, 0.2); color: white; border-color: white;">
-                        <i class="fas fa-database me-2"></i> Fonte: GitHub
+                <div class="header-text">
+                    <h1 class="header-title">Acordos de Cooperação Técnica</h1>
+                    <p class="header-subtitle">Governo de Minas Gerais</p>
+                    <div class="header-info">
+                        <a href="https://www.almg.gov.br/consulte/legislacao/completa/completa.html?tipo=RES&num=27882&ano=2020" 
+                           class="link-legislacao" target="_blank">
+                            <i class="material-icons" style="font-size: 14px;">description</i>
+                            Resolução nº 27.882/2020
+                        </a>
+                        <span class="badge-atualizacao-header">
+                            <i class="material-icons" style="font-size: 11px;">update</i>
+                            Atualizado em: <span id="data-atualizacao-header">Carregando...</span>
+                        </span>
                     </div>
-                    <small class="text-white d-block mt-1" style="font-size: 10px;">Atualização automática</small>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
 
     <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
     <div class="container">
@@ -1130,17 +1169,17 @@
             <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="dashboard1-tab" data-bs-toggle="tab" data-bs-target="#dashboard1" type="button" role="tab">
-                        <i class="fas fa-chart-bar me-2"></i>Visão Geral
+                        <i class="material-icons me-2">bar_chart</i>Visão Geral
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="dashboard2-tab" data-bs-toggle="tab" data-bs-target="#dashboard2" type="button" role="tab">
-                        <i class="fas fa-search me-2"></i>Consulta de Acordos
+                        <i class="material-icons me-2">handshake</i>Consulta de Acordos
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="dashboard3-tab" data-bs-toggle="tab" data-bs-target="#dashboard3" type="button" role="tab">
-                        <i class="fas fa-download me-2"></i>Downloads
+                        <i class="material-icons me-2">downloading</i>Downloads
                     </button>
                 </li>
             </ul>
@@ -1197,10 +1236,10 @@
                         <div class="col-12">
                             <div class="d-flex gap-3 flex-wrap">
                                 <button class="btn-primary-custom" id="aplicarFiltros">
-                                    <i class="fas fa-filter me-2"></i>Pesquisar
+                                    <i class="material-icons me-2">search</i>Pesquisar
                                 </button>
                                 <button class="btn-secondary-custom" id="limparFiltros">
-                                    <i class="fas fa-redo me-2"></i>Limpar Filtros
+                                    <i class="material-icons me-2">clear</i>Limpar Filtros
                                 </button>
                             </div>
                         </div>
@@ -1250,31 +1289,32 @@
                 <div class="actions-container mb-4">
                     <div class="export-buttons">
                         <button class="btn-export" id="exportCSVDashboard1">
-                            <i class="fas fa-file-csv me-2"></i> Exportar CSV
+                            <i class="material-icons me-2">description</i> Exportar CSV
                         </button>
                         <button class="btn-export" id="printDashboard1">
-                            <i class="fas fa-print me-2"></i> Imprimir
+                            <i class="material-icons me-2">print</i> Imprimir
                         </button>
+                        <button class="btn-export" id="Compartilharlink">
+                            <i class="material-icons me-2">share</i> Compartilhar Link
+                        </button>
+                    </div>
+                    
+                    <div class="right-aligned-container">
+                        <div class="items-per-page">
+                            <span>Itens por página:</span>
+                            <select id="itemsPerPageDashboard1">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50" selected>50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                        <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
                     </div>
                 </div>
 
                 <!-- Tabela Dashboard 1 - VISÃO GERAL -->
                 <div class="table-container">
-                    <div class="table-header">
-                        <h3 class="table-title">Visão Geral por Órgão</h3>
-                        <div class="d-flex align-items-center gap-3 ms-auto">
-                            <div class="items-per-page">
-                                <span>Itens por página:</span>
-                                <select id="itemsPerPageDashboard1">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50" selected>50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </div>
-                            <span class="table-badge" id="resumoCountDashboard1">0 registros</span>
-                        </div>
-                    </div>
                     <div class="table-fixed-header-container">
                         <table class="table table-hover" id="visaoGeralTable">
                             <thead>
@@ -1383,10 +1423,10 @@
                         <div class="col-12">
                             <div class="d-flex gap-3 flex-wrap">
                                 <button class="btn-primary-custom" id="pesquisarAcordos">
-                                    <i class="fas fa-search me-2"></i>Pesquisar
+                                    <i class="material-icons me-2">search</i>Pesquisar
                                 </button>
                                 <button class="btn-secondary-custom" id="limparFiltrosDashboard2">
-                                    <i class="fas fa-times me-2"></i>Limpar Filtros
+                                    <i class="material-icons me-2">clear</i>Limpar Filtros
                                 </button>
                             </div>
                         </div>
@@ -1397,36 +1437,38 @@
                 <div class="actions-container mb-4">
                     <div class="export-buttons">
                         <button class="btn-export" id="exportCSVDashboard2">
-                            <i class="fas fa-file-csv"></i> Exportar CSV
+                            <i class="material-icons me-2">description</i> Exportar CSV
                         </button>
                         <button class="btn-export" id="printDashboard2">
-                            <i class="fas fa-print"></i> Imprimir
+                            <i class="material-icons me-2">print</i> Imprimir
+                        </button>
+                        <button class="btn-export" id="compartilharLinkDashboard2">
+                            <i class="material-icons me-2">share</i> Compartilhar Link
                         </button>
                     </div>
 
-                    <div class="search-box-container">
-                        <label for="searchAcordos">Buscar registros:</label>
-                        <input type="text" id="searchAcordos" placeholder="Buscar por número, órgão, parceiro ou objeto...">
+                    <div class="right-aligned-container">
+                        <div class="search-box-container">
+                            <label for="searchAcordos">Buscar registros:</label>
+                            <input type="text" id="searchAcordos" placeholder="Buscar por número, órgão, parceiro ou objeto...">
+                        </div>
+                        
+                        <div class="items-per-page">
+                            <span>Itens por página:</span>
+                            <select id="itemsPerPageDashboard2">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50" selected>50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                        
+                        <span class="table-badge" id="resumoCountDashboard2">0 acordos</span>
                     </div>
                 </div>
 
                 <!-- Tabela de Acordos Dashboard 2 -->
                 <div class="table-container">
-                    <div class="table-header">
-                        <h3 class="table-title">Consulta de Acordos</h3>
-                        <div class="d-flex align-items-center gap-3 ms-auto">
-                            <div class="items-per-page">
-                                <span>Itens por página:</span>
-                                <select id="itemsPerPageDashboard2">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50" selected>50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </div>
-                            <span class="table-badge" id="resumoCountDashboard2">0 acordos</span>
-                        </div>
-                    </div>
                     <div class="table-fixed-header-container">
                         <table class="table table-hover" id="acordosTable">
                             <thead>
@@ -1481,7 +1523,7 @@
                         </div>
                         <div class="col-md-6 d-flex align-items-end">
                             <button class="btn-primary-custom w-100" id="downloadCSV">
-                                <i class="fas fa-download me-2"></i>Baixar CSV Completo
+                                <i class="material-icons me-2">download</i>Baixar CSV Completo
                             </button>
                         </div>
                     </div>
@@ -1496,28 +1538,28 @@
                         <div class="row">
                             <div class="col-md-6 col-12">
                                 <div class="card-stats">
-                                    <i class="fas fa-database fa-3x mb-3" style="color: var(--primary-dark);"></i>
+                                    <i class="material-icons fa-3x mb-3" style="color: var(--primary-dark);">storage</i>
                                     <h4>Fonte dos Dados</h4>
                                     <p class="text-muted" style="font-size: 13px;">Dados atualizados automaticamente do GitHub</p>
                                     <div class="mt-3">
-                                        <a href="https://github.com/transparencia-mg/estagiarios" 
+                                        <a href="https://github.com/transparencia-mg/acordos_cooperacao_tecnica" 
                                            target="_blank" 
                                            class="btn-export w-100 d-block text-decoration-none">
-                                            <i class="fab fa-github me-2"></i>Acessar Repositório
+                                            <i class="material-icons me-2">code</i>Acessar Repositório
                                         </a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="card-stats">
-                                    <i class="fas fa-external-link-alt fa-3x mb-3" style="color: var(--primary-dark);"></i>
+                                    <i class="material-icons fa-3x mb-3" style="color: var(--primary-dark);">public</i>
                                     <h4>Portal de Dados Abertos</h4>
                                     <p class="text-muted" style="font-size: 13px;">Acesse o portal oficial de dados abertos de Minas Gerais</p>
                                     <div class="mt-3">
                                         <a href="https://dados.mg.gov.br/" 
                                            target="_blank" 
                                            class="btn-export w-100 d-block text-decoration-none">
-                                            <i class="fas fa-external-link-alt me-2"></i>Acessar Portal
+                                            <i class="material-icons me-2">open_in_new</i>Acessar Portal
                                         </a>
                                     </div>
                                 </div>
@@ -1591,13 +1633,13 @@
                             </div>
                             
                             <div class="alert alert-info mt-3">
-                                <i class="fas fa-info-circle me-2"></i>
+                                <i class="material-icons me-2">info</i>
                                 <strong>Fonte dos Dados:</strong> Os dados são carregados automaticamente do repositório GitHub 
-                                <a href="https://github.com/transparencia-mg/estagiarios" target="_blank">transparencia-mg/estagiarios</a>
+                                <a href="https://github.com/transparencia-mg/acordos_cooperacao_tecnica" target="_blank">transparencia-mg/acordos_cooperacao_tecnica</a>
                             </div>
                             
                             <div class="alert alert-success mt-2">
-                                <i class="fas fa-sync-alt me-2"></i>
+                                <i class="material-icons me-2">sync</i>
                                 <strong>Atualização Automática:</strong> Os dados são atualizados automaticamente quando novos arquivos são adicionados ao repositório GitHub.
                             </div>
                         </div>
@@ -1612,7 +1654,7 @@
     <footer class="footer mt-4 pt-4 border-top">
         <div class="container text-center text-muted">
             <p class="mb-1">
-                <i class="fas fa-sync-alt me-2"></i> 
+                <i class="material-icons me-2">update</i> 
                 Data de Atualização — 
                 <span id="footer-atualizacao">Carregando...</span>
             </p>
@@ -1621,12 +1663,12 @@
             </p>
             <p class="mt-2 mb-0 small">
                 <a href="https://dados.mg.gov.br" style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">
-                    <i class="fas fa-external-link-alt"></i> dados.mg.gov.br
+                    <i class="material-icons" style="font-size: 14px;">open_in_new</i> dados.mg.gov.br
                 </a>
                 | 
-                <a href="https://github.com/transparencia-mg/estagiarios" 
+                <a href="https://github.com/transparencia-mg/acordos_cooperacao_tecnica" 
                    style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">
-                    <i class="fab fa-github"></i> GitHub
+                    <i class="material-icons" style="font-size: 14px;">code</i> GitHub
                 </a>
             </p>
         </div>
@@ -1638,7 +1680,7 @@
             <div class="modal-content modal-creative">
                 <div class="modal-header">
                     <h5 class="modal-title" id="detailModalLabel">
-                        <i class="fas fa-file-contract me-2"></i>Detalhes do Acordo
+                        <i class="material-icons me-2">description</i>Detalhes do Acordo
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -1649,7 +1691,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">
-                        <i class="fas fa-times me-2"></i>Fechar
+                        <i class="material-icons me-2">close</i>Fechar
                     </button>
                 </div>
             </div>
@@ -1690,6 +1732,7 @@
         let currentSortDashboard1 = { column: 'orgao_acordo', order: 'asc' };
         let currentSortDashboard2 = { column: 'ano', order: 'desc' };
         let currentSearchTerm = '';
+        let dashboardAnterior = '';
         
         const chartColors = {
             primary: '#1A5276',
@@ -1710,116 +1753,21 @@
 
         // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
 
-        document.addEventListener('DOMContentLoaded', async function () {
-            console.log('=== INICIANDO DASHBOARD ACORDOS DE COOPERAÇÃO ===');
-
-            showLoading(true);
-
-            try {
-                await loadData();
-
-                updateDataAtualizacao();
-                updateFilterOptions();
-                updateDashboard1();
-                initializeDashboard2();
-                updateDashboard3();
-                setupEventListeners();
-
-                console.log('Dashboard inicializado com sucesso!');
-                console.log(`Dados carregados: ${acordosData.length} acordos`);
-
-            } catch (error) {
-                console.error('Erro ao carregar dados:', error);
-                showError('Erro ao carregar dados do CSV.');
-            } finally {
-                showLoading(false);
-            }
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            loadInitialData();
+            setupAtualizacaoData();
+            console.log('Painel de Acordos de Cooperação Técnica carregado com sucesso!!!');
+            iframeUpdateHeight();
         });
 
-        // ==================== CARREGAR DADOS DO GITHUB ====================
-
-        function loadData() {
-            return new Promise((resolve, reject) => {
-
-                Papa.parse(GITHUB_CSV_URL, {
-                    download: true,
-                    header: true,
-                    delimiter: ";",
-                    encoding: "utf-8",
-                    skipEmptyLines: "greedy",
-
-                    transformHeader: function (header) {
-                        return header
-                            .replace(/^\uFEFF/, "")
-                            .trim()
-                            .toLowerCase()
-                            .normalize("NFD")
-                            .replace(/[\u0300-\u036f]/g, "");
-                    },
-
-                    complete: function (results) {
-
-                        console.log("Linhas brutas:", results.data.length);
-                        Object.keys(results.data[0]).forEach(k => console.log("COLUNA CSV →", k));
-
-                        const dadosValidos = results.data.filter(row =>
-                            Object.values(row).some(v => v && v.toString().trim() !== "")
-                        );
-
-                        // 🔁 MAPA CORRETO (JÁ NORMALIZADO)
-                        acordosData = dadosValidos.map((row, index) => ({
-    __id: `${row.ano || 'sem_ano'}__${row.numero_termo || 'sem_numero'}__${index}`,
-    ano: row.ano || '',
-    numero_termo: row.numero_termo || '',
-    numero_sei: row.numero_sei || '',
-    orgao_acordo:
-        row.orgao_acordo ||
-        row.orgao ||
-        row['orgão'] ||
-        row['orgao do governo'] ||
-        '',
-    parceiro_acordo:
-        row.parceiro_acordo ||
-        row.parceiro ||
-        row['instituicao parceira'] ||
-        '',
-    objeto: row.objeto || '',
-    inicio_vigencia: row.inicio_vigencia || '',
-    fim_vigencia: row.fim_vigencia || '',
-    situacao: (row.situacao || '').toUpperCase(),
-    link_documento: row.link_documento || '',
-    numero_documento: row.numero_documento || ''
-}));
-
-                        // Normalizar situações para os 3 tipos
-                        acordosData.forEach(acordo => {
-                            const situacao = acordo.situacao;
-                            if (situacao.includes('CONCLU') || situacao.includes('ENCERRADO') || situacao.includes('FINALIZADO')) {
-                                acordo.situacao = 'ENCERRADO';
-                            } else if (situacao.includes('RESCINDIDO') || situacao.includes('CANCELADO') || situacao.includes('ANULADO')) {
-                                acordo.situacao = 'RESCINDIDO';
-                            } else if (situacao.includes('VIGENTE') || situacao.includes('ATIVO') || situacao.includes('EM VIGOR')) {
-                                acordo.situacao = 'VIGENTE';
-                            }
-                        });
-
-                        filteredData = [...acordosData];
-
-                        console.log("Dados normalizados:", acordosData.length);
-                        console.log("Exemplo normalizado:", acordosData[0]);
-
-                        resolve();
-                    },
-
-                    error: function (err) {
-                        console.error("Erro ao carregar CSV:", err);
-                        reject(err);
-                    }
-                });
-            });
-        }
-        
         // ==================== FUNÇÕES DE UTILIDADE ====================
+        
+        function iframeUpdateHeight() { 
+            window.parent.postMessage({ iframeHeight: document.body.scrollHeight+10 }, '*'); 
+        }
+
         function showLoading(show) {
             const overlay = document.getElementById('loadingOverlay');
             overlay.style.display = show ? 'flex' : 'none';
@@ -1830,7 +1778,7 @@
             const errorDiv = document.createElement('div');
             errorDiv.className = 'alert alert-danger alert-dismissible fade show';
             errorDiv.innerHTML = `
-                <i class="fas fa-exclamation-triangle me-2"></i>
+                <i class="material-icons me-2">warning</i>
                 ${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
@@ -1878,9 +1826,11 @@
             // Exportação
             document.getElementById('exportCSVDashboard1').addEventListener('click', () => exportToCSV('dashboard1'));
             document.getElementById('printDashboard1').addEventListener('click', () => printDashboard('dashboard1'));
+            document.getElementById('Compartilharlink').addEventListener('click', () => compartilharLink('dashboard1'));
            
             document.getElementById('exportCSVDashboard2').addEventListener('click', () => exportToCSV('dashboard2'));
             document.getElementById('printDashboard2').addEventListener('click', () => printDashboard('dashboard2'));
+            document.getElementById('compartilharLinkDashboard2').addEventListener('click', () => compartilharLink('dashboard2'));
             
             // Download
             document.getElementById('downloadCSV').addEventListener('click', downloadFullCSV);
@@ -1894,9 +1844,14 @@
             // Troca de abas
             document.getElementById('dashboard1-tab').addEventListener('click', function() {
                 setTimeout(updateDashboard1, 100);
+                iframeUpdateHeight();
             });
             document.getElementById('dashboard2-tab').addEventListener('click', function() {
                 setTimeout(updateDashboard2, 100);
+                iframeUpdateHeight();
+            });
+            document.getElementById('dashboard3-tab').addEventListener('click', function() {
+                iframeUpdateHeight();
             });
             
             // Itens por página
@@ -1922,8 +1877,132 @@
                 const selectedYear = this.value;
                 filterByYear(selectedYear);
             });
+            
+            // Event listeners para mudança de aba
+            const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    const tabId = this.getAttribute('data-bs-target').replace('#', '');
+                    if (tabId === 'dashboard3') {
+                        // Se vem de outro dashboard, mostra botão voltar
+                        if (dashboardAnterior && dashboardAnterior !== 'dashboard3') {
+                            document.getElementById('botaoVoltarContainer').style.display = 'block';
+                        } else {
+                            document.getElementById('botaoVoltarContainer').style.display = 'none';
+                        }
+                    } else {
+                        dashboardAnterior = tabId;
+                    }
+                    iframeUpdateHeight();
+                });
+            });
         }
 
+        function setupAtualizacaoData() {
+            updateDataAtualizacao();
+        }
+
+        async function loadInitialData() {
+            showLoading(true);
+            try {
+                await loadData();
+                updateFilterOptions();
+                updateDashboard1();
+                initializeDashboard2();
+                updateDashboard3();
+                console.log('Dashboard inicializado com sucesso!');
+                console.log(`Dados carregados: ${acordosData.length} acordos`);
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                showError('Erro ao carregar dados do CSV.');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // ==================== CARREGAR DADOS DO GITHUB ====================
+
+        function loadData() {
+            return new Promise((resolve, reject) => {
+
+                Papa.parse(GITHUB_CSV_URL, {
+                    download: true,
+                    header: true,
+                    delimiter: ";",
+                    encoding: "utf-8",
+                    skipEmptyLines: "greedy",
+
+                    transformHeader: function (header) {
+                        return header
+                            .replace(/^\uFEFF/, "")
+                            .trim()
+                            .toLowerCase()
+                            .normalize("NFD")
+                            .replace(/[\u0300-\u036f]/g, "");
+                    },
+
+                    complete: function (results) {
+
+                        console.log("Linhas brutas:", results.data.length);
+                        Object.keys(results.data[0]).forEach(k => console.log("COLUNA CSV →", k));
+
+                        const dadosValidos = results.data.filter(row =>
+                            Object.values(row).some(v => v && v.toString().trim() !== "")
+                        );
+
+                        // 🔁 MAPA CORRETO (JÁ NORMALIZADO)
+                        acordosData = dadosValidos.map((row, index) => ({
+                            __id: `${row.ano || 'sem_ano'}__${row.numero_termo || 'sem_numero'}__${index}`,
+                            ano: row.ano || '',
+                            numero_termo: row.numero_termo || '',
+                            numero_sei: row.numero_sei || '',
+                            orgao_acordo:
+                                row.orgao_acordo ||
+                                row.orgao ||
+                                row['orgão'] ||
+                                row['orgao do governo'] ||
+                                '',
+                            parceiro_acordo:
+                                row.parceiro_acordo ||
+                                row.parceiro ||
+                                row['instituicao parceira'] ||
+                                '',
+                            objeto: row.objeto || '',
+                            inicio_vigencia: row.inicio_vigencia || '',
+                            fim_vigencia: row.fim_vigencia || '',
+                            situacao: (row.situacao || '').toUpperCase(),
+                            link_documento: row.link_documento || '',
+                            numero_documento: row.numero_documento || ''
+                        }));
+
+                        // Normalizar situações para os 3 tipos
+                        acordosData.forEach(acordo => {
+                            const situacao = acordo.situacao;
+                            if (situacao.includes('CONCLU') || situacao.includes('ENCERRADO') || situacao.includes('FINALIZADO')) {
+                                acordo.situacao = 'ENCERRADO';
+                            } else if (situacao.includes('RESCINDIDO') || situacao.includes('CANCELADO') || situacao.includes('ANULADO')) {
+                                acordo.situacao = 'RESCINDIDO';
+                            } else if (situacao.includes('VIGENTE') || situacao.includes('ATIVO') || situacao.includes('EM VIGOR')) {
+                                acordo.situacao = 'VIGENTE';
+                            }
+                        });
+
+                        filteredData = [...acordosData];
+
+                        console.log("Dados normalizados:", acordosData.length);
+                        console.log("Exemplo normalizado:", acordosData[0]);
+
+                        resolve();
+                    },
+
+                    error: function (err) {
+                        console.error("Erro ao carregar CSV:", err);
+                        reject(err);
+                    }
+                });
+            });
+        }
+        
         // ==================== FUNÇÕES DE FILTRO ====================
         function updateFilterOptions() {
             // Obter anos únicos
@@ -2240,7 +2319,7 @@
                         <div class="metric-label">Total de Acordos</div>
                         <div class="metric-value">${totalAcordos.toLocaleString('pt-BR')}</div>
                         <div class="update-info">
-                            <i class="fas fa-handshake"></i> Acordos registrados
+                            <i class="material-icons" style="font-size: 14px;">handshake</i> Acordos registrados
                         </div>
                     </div>
                 </div>
@@ -2258,7 +2337,7 @@
                         <div class="metric-label">Acordos Encerrados</div>
                         <div class="metric-value">${encerrados}</div>
                         <div class="update-info">
-                            <i class="fas fa-flag-checkered"></i> Concluídos
+                            <i class="material-icons" style="font-size: 14px;">flag</i> Concluídos
                         </div>
                     </div>
                 </div>
@@ -2267,7 +2346,7 @@
                         <div class="metric-label">Parceiros/Instituições</div>
                         <div class="metric-value">${parceirosUnicos}</div>
                         <div class="metric-change warning">
-                            <i class="fas fa-university me-1"></i> Parcerias ativas
+                            <i class="material-icons" style="font-size: 14px;">apartment</i> Parcerias ativas
                         </div>
                     </div>
                 </div>
@@ -2785,7 +2864,7 @@
                                 data-id="${acordo.__id}"
                                 onclick="handleDetalhesClick(this)"
                                 title="Ver Detalhes">
-                                <i class="fas fa-eye"></i><span>Detalhes</span>
+                                <i class="material-icons" style="font-size: 14px;">visibility</i><span>Detalhes</span>
                             </button>
                         </div>
                     </td>
@@ -2921,20 +3000,20 @@
 
                 if (situacao === 'VIGENTE') {
                     badgeClass += 'badge-vigente';
-                    statusIcon = '<i class="fas fa-check-circle"></i>';
+                    statusIcon = '<i class="material-icons">check_circle</i>';
                 } else if (situacao === 'ENCERRADO') {
                     badgeClass += 'badge-encerrado';
-                    statusIcon = '<i class="fas fa-flag-checkered"></i>';
+                    statusIcon = '<i class="material-icons">flag</i>';
                 } else if (situacao === 'RESCINDIDO') {
                     badgeClass += 'badge-rescindido';
-                    statusIcon = '<i class="fas fa-times-circle"></i>';
+                    statusIcon = '<i class="material-icons">cancel</i>';
                 } else {
                     badgeClass += 'badge-encerrado';
-                    statusIcon = '<i class="fas fa-question-circle"></i>';
+                    statusIcon = '<i class="material-icons">help</i>';
                 }
 
                 document.getElementById('detailModalLabel').innerHTML =
-                    `<i class="fas fa-file-contract me-2"></i>Acordo ${acordo.numero_termo} (${acordo.ano})`;
+                    `<i class="material-icons me-2">description</i>Acordo ${acordo.numero_termo} (${acordo.ano})`;
 
                 document.getElementById('acordoInfo').innerHTML = `
                     <div class="info-grid">
@@ -2971,7 +3050,7 @@
 
                     <div class="objeto-container">
                         <h5 class="objeto-title">
-                            <i class="fas fa-file-alt"></i> Objeto do Acordo
+                            <i class="material-icons">subject</i> Objeto do Acordo
                         </h5>
                         <div class="objeto-text">
                             ${acordo.objeto || 'Objeto não informado.'}
@@ -2981,7 +3060,7 @@
                     ${acordo.link_documento ? `
                     <div class="mt-4 text-center">
                         <a href="${acordo.link_documento}" target="_blank" class="btn-primary-custom">
-                            <i class="fas fa-external-link-alt me-2"></i> Acessar Documento
+                            <i class="material-icons me-2">open_in_new</i> Acessar Documento
                         </a>
                     </div>
                     ` : ''}
@@ -3153,6 +3232,22 @@
 
         function printDashboard(source) {
             window.print();
+        }
+
+        function compartilharLink(source) {
+            const currentUrl = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Acordos de Cooperação Técnica - Governo de Minas Gerais',
+                    text: 'Confira os dados de acordos de cooperação técnica do Governo de Minas Gerais',
+                    url: currentUrl
+                });
+            } else {
+                // Fallback para copiar para a área de transferência
+                navigator.clipboard.writeText(currentUrl).then(() => {
+                    alert('Link copiado para a área de transferência!');
+                });
+            }
         }
 
         function exportResumoCSV() {
