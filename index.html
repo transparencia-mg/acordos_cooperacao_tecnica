@@ -1916,6 +1916,11 @@
         // URL do CSV no GitHub - CORRIGIDA
         const GITHUB_CSV_URL = 'https://raw.githubusercontent.com/transparencia-mg/acordos_cooperacao_tecnica/main/dataset/data/acordos_cooperacao_tecnica.csv';
 
+		// ==================== FUNÇÃO PARA ATUALIZAR ALTURA DO IFRAME ====================
+        function iframeUpdateHeight() { 
+            window.parent.postMessage({ iframeHeight: document.body.scrollHeight + 10 }, '*'); 
+        }
+		
         // ==================== FUNÇÕES DE INICIALIZAÇÃO ====================
 
         // Inicialização
@@ -1929,9 +1934,6 @@
 
             	iframeUpdateHeight();
         });
-
-	// código incluir
-	function iframeUpdateHeight() { window.parent.postMessage({ iframeHeight: document.body.scrollHeight+10 }, '*'); }
 
         // ==================== FUNÇÕES DE UTILIDADE ====================
         
