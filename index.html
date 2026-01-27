@@ -23,7 +23,9 @@
             --primary-darker: #0E2F44;
             --accent-blue: #3498DB;
             --accent-bright: #2980B9;
-            --accent-red: #E74C3C; /* CORRIGIDO: Variável adicionada */
+            --accent-red: #E74C3C;
+            --button-red: #E74C3C;
+            --button-red-hover: #3498DB;
             --background-light: #F2F4F7;
             --success-green: #27AE60;
             --warning-yellow: #F39C12;
@@ -39,6 +41,11 @@
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 30px;
+        }
+        
+        /* Espaçamento antes do dashboard */
+        .dashboard-spacing {
+            margin-top: 30px;
         }
         
         /* ==================== HEADER PRINCIPAL ==================== */
@@ -431,11 +438,33 @@
             font-size: 13px;
         }
         
-        /* Coluna de quantidade centralizada */
+        /* Coluna de quantidade centralizada - DASHBOARD 1 */
         .table tbody td.quantidade {
-            text-align: center;
+            text-align: center !important;
             font-weight: 600;
         }
+        
+        /* Garantir que todas as colunas do dashboard 1 sejam centralizadas */
+        #visaoGeralTable tbody td {
+            text-align: center;
+        }
+        
+        #visaoGeralTable tbody td:first-child {
+            text-align: left;
+        }
+
+	/* Adicione isso ao seu CSS, se já não existir */
+	#visaoGeralTable .quantidade,
+	#acordosTable .quantidade {
+    		text-align: center !important;
+    		font-weight: 600;
+	}
+
+	/* E também para as células do rodapé */
+	.table-total-row td.quantidade {
+    		text-align: center !important;
+    		font-weight: 600;
+	}
         
         /* Coluna de ações na tabela */
         .actions-column {
@@ -458,6 +487,7 @@
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 3px;
         }
         
@@ -481,6 +511,10 @@
             transition: all 0.3s ease;
             font-size: 13px;
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         
         .btn-primary-custom:hover {
@@ -490,6 +524,30 @@
             color: white;
         }
         
+        /* Botão de pesquisa com cor vermelha - ALINHADO */
+        .btn-pesquisa {
+            background: linear-gradient(to right, var(--button-red), #C0392B);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .btn-pesquisa:hover {
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-bright));
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+            color: white;
+        }
+        
+        /* Botão secundário - ALINHADO */
         .btn-secondary-custom {
             background: white;
             border: 2px solid var(--primary-dark);
@@ -499,6 +557,10 @@
             border-radius: 6px;
             transition: all 0.3s ease;
             font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         
         .btn-secondary-custom:hover {
@@ -519,6 +581,7 @@
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             cursor: pointer;
         }
@@ -554,6 +617,9 @@
             transition: all 0.3s ease;
             font-size: 13px;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .nav-tabs .nav-link:hover {
@@ -564,6 +630,12 @@
         .nav-tabs .nav-link.active {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
             color: white;
+        }
+        
+        .nav-tabs .nav-link i {
+            margin-right: 8px;
+            font-size: 18px;
+            vertical-align: middle;
         }
         
         /* ==================== AÇÕES ==================== */
@@ -584,6 +656,48 @@
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .right-aligned-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        
+        /* Alinhar itens por página e contador */
+        .items-per-page-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .items-per-page {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .items-per-page select {
+            border: 2px solid var(--primary-dark);
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 12px;
+            width: auto;
+            min-width: 70px;
+            background-color: white;
+            color: var(--primary-dark);
+        }
+        
+        .items-per-page select option {
+            background-color: white;
+            color: var(--primary-dark);
         }
         
         /* ==================== LOADING OVERLAY ==================== */
@@ -636,13 +750,12 @@
             padding: 2px 4px;
             border-radius: 4px;
             font-size: 13px;
-            border-bottom: 1px dashed rgba(26, 82, 118, 0.3);
+            border-bottom: 1px solid transparent;
         }
 
         .orgao-link:hover {
-            color: var(--accent-blue);
-            background-color: rgba(52, 152, 219, 0.05);
-            border-bottom: 1px solid var(--accent-blue);
+            color: var(--accent-red);
+            background-color: rgba(231, 76, 60, 0.05);
             transform: translateY(-1px);
         }
 
@@ -693,32 +806,6 @@
             color: var(--primary-dark);
         }
         
-        /* Itens por página */
-        .items-per-page {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: white;
-            font-weight: 600;
-        }
-        
-        .items-per-page select {
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 6px;
-            padding: 5px 10px;
-            font-size: 12px;
-            width: auto;
-            min-width: 70px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-        
-        .items-per-page select option {
-            background-color: var(--primary-dark);
-            color: white;
-        }
-        
         /* ==================== CARDS ==================== */
         .card-stats {
             background: white;
@@ -750,21 +837,12 @@
             margin-bottom: 20px;
         }
 
-        .footer {
-            text-align: center;
-            padding: 15px;
-            color: var(--primary-dark);
-            font-size: 0.85rem;
-            border-top: 1px solid #dee2e6;
-            margin-top: 30px;
-        }
-        
         /* ==================== BUSCA RÁPIDA ==================== */
         .search-box-container {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 0;
         }
         
         .search-box-container label {
@@ -835,6 +913,7 @@
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 4px;
             font-size: 12px;
             padding: 2px 6px;
@@ -880,6 +959,7 @@
             font-size: 1.4rem;
             display: flex;
             align-items: center;
+            justify-content: flex-start;
             gap: 10px;
         }
         
@@ -904,6 +984,10 @@
             background: var(--background-light);
             border-top: 1px solid rgba(0, 0, 0, 0.05);
             padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         /* Grid de informações no modal */
@@ -981,6 +1065,7 @@
             margin-bottom: 15px;
             display: flex;
             align-items: center;
+            justify-content: flex-start;
             gap: 10px;
         }
         
@@ -997,11 +1082,98 @@
         .modal-status-badge {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             padding: 8px 16px;
             border-radius: 20px;
             font-weight: 600;
             font-size: 14px;
+        }
+        
+        /* ==================== DATA ATUALIZAÇÃO CENTRALIZADA ==================== */
+        .data-atualizacao-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+        }
+        
+        .data-atualizacao-box {
+            background: white;
+            border-radius: 8px;
+            padding: 8px 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .data-atualizacao-box i {
+            font-size: 14px;
+            color: var(--accent-blue);
+        }
+        
+        /* ==================== BOTÃO DE LEGISLAÇÃO ==================== */
+        .btn-legislacao {
+            background: white;
+            border: 2px solid var(--primary-dark);
+            color: var(--primary-dark);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            flex-grow: 1;
+        }
+        
+        .btn-legislacao:hover {
+            background: var(--primary-dark);
+            color: white;
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
+        
+        /* ==================== ESTILOS PARA DOWNLOADS (DASHBOARD 3) ==================== */
+        .downloads-filter-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-blue);
+        }
+        
+        .downloads-filter-container .row {
+            align-items: center;
+        }
+        
+        .downloads-filter-container .form-select {
+            width: 150px; /* Diminuído o tamanho do filtro de ano */
+        }
+        
+        .downloads-buttons-container {
+            display: flex;
+            gap: 10px;
+            flex-grow: 1;
+        }
+        
+        .downloads-buttons-container .btn-primary-custom {
+            flex-grow: 1;
+        }
+        
+        .downloads-buttons-container .btn-legislacao {
+            flex-grow: 1;
         }
         
         /* ==================== RESPONSIVIDADE ==================== */
@@ -1037,6 +1209,11 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
+            }
+            
+            .right-aligned-container {
+                width: 100%;
+                justify-content: space-between;
             }
             
             .export-buttons {
@@ -1079,7 +1256,8 @@
             }
             
             .btn-primary-custom,
-            .btn-secondary-custom {
+            .btn-secondary-custom,
+            .btn-pesquisa {
                 padding: 8px 15px;
                 font-size: 12px;
             }
@@ -1095,6 +1273,18 @@
             
             .info-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .data-atualizacao-container {
+                justify-content: center;
+            }
+            
+            .downloads-buttons-container {
+                flex-direction: column;
+            }
+            
+            .downloads-filter-container .form-select {
+                width: 100%;
             }
         }
         
@@ -1131,38 +1321,53 @@
             .modal-creative .modal-title {
                 font-size: 1.1rem;
             }
+            
+            .right-aligned-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .items-per-page-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- ==================== CONTEÚDO PRINCIPAL ==================== -->
-    <div class="container">
+    <div class="container dashboard-spacing">
         <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
         <div class="nav-tabs-container">
             <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="dashboard1-tab" data-bs-toggle="tab" data-bs-target="#dashboard1" type="button" role="tab">
-                        <i class="material-icons me-2">bar_chart</i>Visão Geral
+                        <i class="material-icons">bar_chart</i>Visão Geral
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="dashboard2-tab" data-bs-toggle="tab" data-bs-target="#dashboard2" type="button" role="tab">
-                        <i class="material-icons me-2">handshake</i>Consulta de Acordos
+                        <i class="material-icons">handshake</i>Consulta de Acordos
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="dashboard3-tab" data-bs-toggle="tab" data-bs-target="#dashboard3" type="button" role="tab">
-                        <i class="material-icons me-2">downloading</i>Downloads
+                        <i class="material-icons">downloading</i>Downloads
                     </button>
                 </li>
             </ul>
         </div>
 
-                                <span class="badge-atualizacao-header">
-                            <i class="material-icons" style="font-size: 11px;">update</i>
-                            Atualizado em: <span id="data-atualizacao-header">Carregando...</span>
-                        </span>
+        <!-- ==================== DATA DE ATUALIZAÇÃO CENTRALIZADA ==================== -->
+        <div class="data-atualizacao-container">
+            <div class="data-atualizacao-box">
+                <i class="material-icons">update</i>
+                Atualizado em: <span id="data-atualizacao-header">Carregando...</span>
+            </div>
+        </div>
+
         <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
         <div class="tab-content" id="dashboardTabsContent">
             
@@ -1213,7 +1418,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="d-flex gap-3 flex-wrap">
-                                <button class="btn-primary-custom" id="aplicarFiltros">
+                                <button class="btn-pesquisa" id="aplicarFiltros">
                                     <i class="material-icons me-2">search</i>Pesquisar
                                 </button>
                                 <button class="btn-secondary-custom" id="limparFiltros">
@@ -1267,27 +1472,29 @@
                 <div class="actions-container mb-4">
                     <div class="export-buttons">
                         <button class="btn-export" id="exportCSVDashboard1">
-                            <i class="material-icons me-2">description</i> Exportar CSV
+                            <i class="material-icons me-2">description</i>Exportar CSV
                         </button>
                         <button class="btn-export" id="printDashboard1">
-                            <i class="material-icons me-2">print</i> Imprimir
+                            <i class="material-icons me-2">print</i>Imprimir
                         </button>
                         <button class="btn-export" id="Compartilharlink">
-                            <i class="material-icons me-2">share</i> Compartilhar Link
+                            <i class="material-icons me-2">share</i>Compartilhar Link
                         </button>
                     </div>
                     
                     <div class="right-aligned-container">
-                        <div class="items-per-page">
-                            <span>Itens por página:</span>
-                            <select id="itemsPerPageDashboard1">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50" selected>50</option>
-                                <option value="100">100</option>
-                            </select>
+                        <div class="items-per-page-container">
+                            <div class="items-per-page">
+                                <span>Itens por página:</span>
+                                <select id="itemsPerPageDashboard1">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50" selected>50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
                         </div>
-                        <span class="table-badge" id="resumoCountDashboard1">0 órgãos</span>
                     </div>
                 </div>
 
@@ -1400,7 +1607,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="d-flex gap-3 flex-wrap">
-                                <button class="btn-primary-custom" id="pesquisarAcordos">
+                                <button class="btn-pesquisa" id="pesquisarAcordos">
                                     <i class="material-icons me-2">search</i>Pesquisar
                                 </button>
                                 <button class="btn-secondary-custom" id="limparFiltrosDashboard2">
@@ -1415,33 +1622,35 @@
                 <div class="actions-container mb-4">
                     <div class="export-buttons">
                         <button class="btn-export" id="exportCSVDashboard2">
-                            <i class="material-icons me-2">description</i> Exportar CSV
+                            <i class="material-icons me-2">description</i>Exportar CSV
                         </button>
                         <button class="btn-export" id="printDashboard2">
-                            <i class="material-icons me-2">print</i> Imprimir
+                            <i class="material-icons me-2">print</i>Imprimir
                         </button>
                         <button class="btn-export" id="compartilharLinkDashboard2">
-                            <i class="material-icons me-2">share</i> Compartilhar Link
+                            <i class="material-icons me-2">share</i>Compartilhar Link
                         </button>
                     </div>
 
                     <div class="right-aligned-container">
-                        <div class="search-box-container">
-                            <label for="searchAcordos">Buscar registros:</label>
-                            <input type="text" id="searchAcordos" placeholder="Buscar por número, órgão, parceiro ou objeto...">
+                        <div class="items-per-page-container">
+                            <div class="search-box-container">
+                                <label for="searchAcordos">Buscar registros:</label>
+                                <input type="text" id="searchAcordos" placeholder="Buscar por número, órgão, parceiro ou objeto...">
+                            </div>
+                            
+                            <div class="items-per-page">
+                                <span>Itens por página:</span>
+                                <select id="itemsPerPageDashboard2">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50" selected>50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            
+                            <span class="table-badge" id="resumoCountDashboard2">0 acordos</span>
                         </div>
-                        
-                        <div class="items-per-page">
-                            <span>Itens por página:</span>
-                            <select id="itemsPerPageDashboard2">
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50" selected>50</option>
-                                <option value="100">100</option>
-                            </select>
-                        </div>
-                        
-                        <span class="table-badge" id="resumoCountDashboard2">0 acordos</span>
                     </div>
                 </div>
 
@@ -1464,9 +1673,6 @@
                             <tbody id="acordosTableBody">
                                 <!-- Dados serão carregados aqui -->
                             </tbody>
-                            <tfoot id="acordosTableFooter">
-                                <!-- Total geral será carregado aqui -->
-                            </tfoot>
                         </table>
                     </div>
                     
@@ -1489,24 +1695,25 @@
             <div class="tab-pane fade" id="dashboard3" role="tabpanel">
                 
                 <!-- Filtro de Download -->
-                <div class="filter-container">
-                    <div class="row">
-                        <div class="col-md-6">
+                <div class="downloads-filter-container">
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
                             <div class="mb-3">
-                                <label for="anoDownload" class="form-label filter-label">Selecione o Ano para Download</label>
+                                <label for="anoDownload" class="form-label filter-label">Selecione o Ano</label>
                                 <select class="form-select" id="anoDownload">
                                     <!-- Opções serão carregadas dinamicamente -->
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex align-items-end">
-                            <button class="btn-primary-custom w-100" id="downloadCSV">
-                                <i class="material-icons me-2">download</i>Baixar CSV Completo
-                            </button>
-                            <button class="btn-primary-custom w-100" id="Resolução nº 27.882/2020">
-                            <i class="material-icons me-2">download</i>Baixar CSV Completo
-                            </button>
-                        </a>
+                        <div class="col-md-8col-lg-7">
+                            <div class="d-flex gap-3 flex-wrap">
+                                <button class="btn-primary-custom flex-grow-1" id="downloadCSV">
+                                    <i class="material-icons me-2">download</i>Baixar CSV Completo
+                                </button>
+                                <a href="https://www.almg.gov.br/legislacao-mineira/DEC/48764/2024/" target="_blank" class="btn-legislacao flex-grow-1">
+                                    <i class="material-icons me-2">gavel</i>Legislação
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1632,30 +1839,6 @@
         </div>
     </div>
 
-    <!-- ==================== FOOTER ==================== -->
-    <footer class="footer mt-4 pt-4 border-top">
-        <div class="container text-center text-muted">
-            <p class="mb-1">
-                <i class="material-icons me-2">update</i> 
-                Data de Atualização — 
-                <span id="footer-atualizacao">Carregando...</span>
-            </p>
-            <p class="mb-0" style="font-size: 0.85rem;">
-                © 2025 Acordos de Cooperação Técnica - Governo do Estado de Minas Gerais
-            </p>
-            <p class="mt-2 mb-0 small">
-                <a href="https://dados.mg.gov.br" style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">
-                    <i class="material-icons" style="font-size: 14px;">open_in_new</i> dados.mg.gov.br
-                </a>
-                | 
-                <a href="https://github.com/transparencia-mg/acordos_cooperacao_tecnica" 
-                   style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">
-                    <i class="material-icons" style="font-size: 14px;">code</i> GitHub
-                </a>
-            </p>
-        </div>
-    </footer>
-
     <!-- ==================== MODAL DE DETALHES CRIATIVO ==================== -->
     <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -1672,6 +1855,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn-primary-custom">
+                        <i class="material-icons me-2">open_in_new</i>Acessar Documento
+                    </button>
                     <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal">
                         <i class="material-icons me-2">close</i>Fechar
                     </button>
@@ -1771,7 +1957,7 @@
             const now = new Date();
             const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
             document.getElementById('data-atualizacao-header').textContent = dataFormatada;
-            document.getElementById('footer-atualizacao').textContent = dataFormatada;
+            // Removido a atualização do rodapé
         }
 
         // Função para formatar data
@@ -2415,7 +2601,6 @@
             
             // Gerar HTML da tabela
             const rowsHTML = currentData.map(item => {
-
                 const orgaoReal = item.orgao_acordo?.trim();
                 const orgaoExibicao = orgaoReal || 'Órgão não informado';
                 const orgaoSeguro = orgaoReal
@@ -2424,7 +2609,7 @@
 
                 return `
                     <tr>
-                        <td>
+                        <td style="text-align: left;">
                             ${
                                 orgaoSeguro
                                 ? `<a href="#"
@@ -2436,10 +2621,10 @@
                                 : `<span class="text-muted">${orgaoExibicao}</span>`
                             }
                         </td>
-                        <td>${item.total_acordos.toLocaleString('pt-BR')}</td>
-                        <td><span class="badge-situacao badge-vigente">${item.vigentes}</span></td>
-                        <td><span class="badge-situacao badge-encerrado">${item.encerrados}</span></td>
-                        <td><span class="badge-situacao badge-rescindido">${item.rescindidos}</span></td>
+                        <td class="quantidade">${item.total_acordos.toLocaleString('pt-BR')}</td>
+                        <td class="quantidade"><span class="badge-situacao badge-vigente">${item.vigentes}</span></td>
+                        <td class="quantidade"><span class="badge-situacao badge-encerrado">${item.encerrados}</span></td>
+                        <td class="quantidade"><span class="badge-situacao badge-rescindido">${item.rescindidos}</span></td>
                     </tr>
                 `;
             }).join('');
@@ -2447,11 +2632,11 @@
             // Gerar rodapé
             const footerHTML = `
                 <tr class="table-total-row">
-                    <td><strong>TOTAL GERAL (${totalOrgaos} órgãos)</strong></td>
-                    <td><strong>${totalAcordos.toLocaleString('pt-BR')}</strong></td>
-                    <td><strong>${totalVigentes.toLocaleString('pt-BR')}</strong></td>
-                    <td><strong>${totalEncerrados.toLocaleString('pt-BR')}</strong></td>
-                    <td><strong>${totalRescindidos.toLocaleString('pt-BR')}</strong></td>
+                    <td style="text-align: left;"><strong>TOTAL GERAL </strong></td>
+                    <td class="quantidade"><strong>${totalAcordos.toLocaleString('pt-BR')}</strong></td>
+                    <td class="quantidade"><strong>${totalVigentes.toLocaleString('pt-BR')}</strong></td>
+                    <td class="quantidade"><strong>${totalEncerrados.toLocaleString('pt-BR')}</strong></td>
+                    <td class="quantidade"><strong>${totalRescindidos.toLocaleString('pt-BR')}</strong></td>
                 </tr>
             `;
             
@@ -2806,8 +2991,6 @@
             
             // Calcular totais
             const totalAcordos = acordosArray.length;
-            const vigentes = acordosArray.filter(a => a.situacao === 'VIGENTE').length;
-            const orgaosUnicos = [...new Set(acordosArray.map(a => a.orgao_acordo))].length;
             
             // Paginação
             const itemsPerPage = itemsPerPageDashboard2;
@@ -2853,13 +3036,10 @@
                 </tr>
             `}).join('');
             
-            // Gerar rodapé
+            // Gerar rodapé simplificado
             const footerHTML = `
                 <tr class="table-total-row">
-                    <td colspan="2"><strong>TOTAL GERAL: ${totalAcordos.toLocaleString('pt-BR')} acordos</strong></td>
-                    <td><strong>${orgaosUnicos} órgãos</strong></td>
-                    <td colspan="2"><strong>Vigentes: ${vigentes}</strong></td>
-                    <td colspan="3"></td>
+                    <td colspan="8" style="text-align: center;"><strong>TOTAL GERAL</strong></td>
                 </tr>
             `;
             
@@ -3041,9 +3221,9 @@
 
                     ${acordo.link_documento ? `
                     <div class="mt-4 text-center">
-                        <a href="${acordo.link_documento}" target="_blank" class="btn-primary-custom">
-                            <i class="material-icons me-2">open_in_new</i> Acessar Documento
-                        </a>
+                        <button class="btn-primary-custom" onclick="window.open('${acordo.link_documento}', '_blank')">
+                            <i class="material-icons me-2">open_in_new</i>Acessar Documento
+                        </button>
                     </div>
                     ` : ''}
                 `;
