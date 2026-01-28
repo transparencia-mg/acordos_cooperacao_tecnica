@@ -41,9 +41,16 @@
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
             padding-bottom: 15px;
-            overflow-y: visible !important;  /* Alterado de auto para visible */
-            min-height: auto !important;      /* Removido restrição de altura mínima */
-            height: auto !important;          /* Garantir que a altura seja automática */
+            overflow-y: visible !important;  /* IMPEDIR SCROLL NO BODY */
+            overflow-x: hidden !important;
+            min-height: auto !important;
+            height: auto !important;
+            position: relative;
+        }
+
+        html {
+            overflow-y: visible !important; /* IMPEDIR SCROLL NO HTML */
+            height: auto !important;
         }
 
         /* Garantir que o container principal não imponha restrições */
@@ -51,6 +58,7 @@
             height: auto !important;
             min-height: auto !important;
             overflow: visible !important;
+            position: relative;
         }
 
         /* Container principal do conteúdo */
@@ -58,6 +66,7 @@
             overflow: visible !important;
             height: auto !important;
             min-height: auto !important;
+            position: relative;
         }
 
         /* Remover qualquer restrição de altura dos elementos pais */
@@ -65,6 +74,7 @@
             overflow: visible !important;
             height: auto !important;
             min-height: auto !important;
+            position: relative;
         }
 
         /* Garantir que as tabelas possam expandir */
@@ -72,12 +82,14 @@
             height: auto !important;
             min-height: auto !important;
             overflow: visible !important;
+            position: relative;
         }
 
         /* Corrigir o container das tabelas com cabeçalho fixo */
         .table-fixed-header-container {
             max-height: 500px; /* Mantém o limite apenas para a tabela, não para a página */
             overflow-y: auto; /* Scroll apenas na tabela, não na página toda */
+            position: relative;
         }
         
         /* ==================== HEADER PRINCIPAL ==================== */
@@ -367,6 +379,7 @@
         .table-responsive {
             padding: 0;
             overflow-x: auto;
+            overflow-y: visible !important; /* IMPORTANTE: sem scroll vertical aqui */
         }
         
         .table {
@@ -1224,12 +1237,6 @@
             overflow-y: visible !important;
         }
         
-        /* Quando há poucas linhas, não mostrar scroll */
-        .table-fixed-header-container:has(table tbody tr:nth-child(10)) {
-            max-height: none;
-            overflow-y: visible;
-        }
-        
         /* Container principal - garantir que expanda */
         #dashboardTabsContent {
             overflow: visible !important;
@@ -1243,9 +1250,19 @@
             min-height: 0 !important;
         }
         
+        /* Remover scroll de todos os elementos internos */
+        .row, .col, .col-md-3, .col-md-4, .col-md-6, .col-6, .col-12 {
+            overflow: visible !important;
+        }
+        
+        /* REMOVER SCROLL DO BOOTSTRAP CONTAINER */
+        .container-fluid, .container {
+            overflow: visible !important;
+        }
+        
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
-            body {
+            body, html {
                 overflow-y: visible !important;
             }
             
@@ -1915,7 +1932,7 @@
                                 
                                 <div class="alert alert-success mt-2">
                                     <i class="material-icons me-2">sync</i>
-                                    <strong>Atualização Automática:</strong> Os dados são atualizados automatically quando novos arquivos são adicionados ao repositório GitHub.
+                                    <strong>Atualização Automática:</strong> Os dados são atualizados automaticamente quando novos arquivos são adicionados ao repositório GitHub.
                                 </div>
                             </div>
                         </div>
@@ -2007,12 +2024,17 @@
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
+            // Primeiro: garantir que não há scroll duplo
+            removeAllScrollIssues();
+            
+            // Depois inicializar o resto
             setupEventListeners();
             loadInitialData();
-            setupIframeResizeObserver(); // Adicionado
             updateDataAtualizacao();
             console.log('Painel de Acordos de Cooperação Técnica carregado com sucesso!!!');
-            iframeUpdateHeight();
+            
+            // Atualizar altura após carregamento completo
+            setTimeout(iframeUpdateHeight, 1000);
             
             // Atualizar altura quando trocar de aba
             const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
@@ -2023,36 +2045,78 @@
             });
         });
 
-        function iframeUpdateHeight() { 
-            // Esperar um pouco para garantir que o conteúdo tenha sido renderizado
-            setTimeout(() => {
-                const alturaTotal = document.documentElement.scrollHeight;
-                window.parent.postMessage({ 
-                    type: 'iframeHeight',
-                    height: alturaTotal,
-                    source: 'acordos-cooperacao'
-                }, '*');
-                console.log('Altura do iframe atualizada:', alturaTotal, 'px');
-            }, 100);
+        // Função CRÍTICA para remover todos os problemas de scroll
+        function removeAllScrollIssues() {
+            console.log('Removendo problemas de scroll duplo...');
+            
+            // Forçar remoção de overflow em TODOS os elementos
+            const elements = [
+                document.body,
+                document.documentElement,
+                document.querySelector('.main-container'),
+                document.querySelector('.container.dashboard-spacing'),
+                document.querySelector('.tab-content'),
+                ...document.querySelectorAll('.tab-pane'),
+                ...document.querySelectorAll('.table-container'),
+                ...document.querySelectorAll('.row'),
+                ...document.querySelectorAll('.col'),
+                ...document.querySelectorAll('.container'),
+                ...document.querySelectorAll('.container-fluid')
+            ];
+            
+            elements.forEach(el => {
+                if (el && el.style) {
+                    el.style.overflowY = 'visible !important';
+                    el.style.overflowX = 'visible !important';
+                    el.style.overflow = 'visible !important';
+                }
+            });
+            
+            // Remover classes Bootstrap que podem causar scroll
+            document.body.classList.remove('overflow-auto');
+            document.documentElement.classList.remove('overflow-auto');
+            
+            // Forçar o html e body a terem altura automática
+            document.documentElement.style.height = 'auto';
+            document.body.style.height = 'auto';
         }
 
-        function setupIframeResizeObserver() {
-            // Observar mudanças no conteúdo que podem alterar a altura
-            const resizeObserver = new ResizeObserver(() => {
-                iframeUpdateHeight();
+        // Função OTIMIZADA para atualizar a altura do iframe
+        function iframeUpdateHeight() {
+            console.log('Atualizando altura do iframe...');
+            
+            // Forçar reflow para garantir medições precisas
+            document.body.style.display = 'none';
+            document.body.offsetHeight; // Trigger reflow
+            document.body.style.display = '';
+            
+            // Calcular a altura REAL do conteúdo
+            const html = document.documentElement;
+            const body = document.body;
+            
+            // Pegar a maior altura entre body e html
+            const scrollHeight = Math.max(
+                body.scrollHeight, 
+                html.scrollHeight,
+                body.offsetHeight, 
+                html.offsetHeight
+            );
+            
+            // Adicionar margem de segurança (apenas 10px)
+            const finalHeight = scrollHeight + 10;
+            
+            console.log('Altura calculada:', {
+                bodyScrollHeight: body.scrollHeight,
+                htmlScrollHeight: html.scrollHeight,
+                finalHeight: finalHeight
             });
             
-            // Observar o container principal
-            const mainContainer = document.querySelector('.main-container');
-            if (mainContainer) {
-                resizeObserver.observe(mainContainer);
-            }
+            // Enviar para o pai - formato SIMPLES que funciona
+            window.parent.postMessage({ 
+                iframeHeight: finalHeight 
+            }, '*');
             
-            // Observar mudanças nas tabelas
-            const tables = document.querySelectorAll('.table-container');
-            tables.forEach(table => {
-                resizeObserver.observe(table);
-            });
+            return finalHeight;
         }
 
         // ==================== FUNÇÕES DE UTILIDADE ====================
@@ -2189,7 +2253,8 @@
                     } else {
                         dashboardAnterior = tabId;
                     }
-                    iframeUpdateHeight();
+                    // Atualizar altura
+                    setTimeout(iframeUpdateHeight, 300);
                 });
             });
         }
@@ -2209,7 +2274,8 @@
                 showError('Erro ao carregar dados do CSV.');
             } finally {
                 showLoading(false);
-                iframeUpdateHeight();
+                // Atualizar altura após carregar dados
+                setTimeout(iframeUpdateHeight, 500);
             }
         }
 
@@ -2501,7 +2567,8 @@
             }
             
             showLoading(false);
-            iframeUpdateHeight();
+            // Atualizar altura após filtrar
+            setTimeout(iframeUpdateHeight, 300);
         }
 
         function filterAcordosTable(searchTerm) {
@@ -2563,7 +2630,8 @@
             updateSummaryCards();
             updateResumoTable();
             updateCharts1();
-            iframeUpdateHeight();
+            // Atualizar altura
+            setTimeout(iframeUpdateHeight, 100);
         }
 
         function updateSummaryCards() {
@@ -3368,7 +3436,7 @@
         // ==================== DASHBOARD 3: DOWNLOADS ====================
         function updateDashboard3() {
             // Nada a fazer aqui além de atualizar as opções que já foram feitas
-            iframeUpdateHeight();
+            setTimeout(iframeUpdateHeight, 100);
         }
 
         async function downloadFullCSV() {
@@ -3472,6 +3540,9 @@
                         if (tableContainer) {
                             tableContainer.scrollIntoView({ behavior: 'smooth' });
                         }
+                        
+                        // Atualizar altura
+                        setTimeout(iframeUpdateHeight, 500);
                     }, 350);
                 } else {
                     console.error('Elemento da aba não encontrado');
