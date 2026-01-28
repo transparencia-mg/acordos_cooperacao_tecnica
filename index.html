@@ -39,45 +39,45 @@
         /* ==================== ESTILOS GERAIS ==================== */
         body {
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-    		background-color: var(--background-light);
-    		padding-bottom: 15px;
-    		overflow-y: auto;  
-   	 		min-height: 100vh; 
-    		height: auto;    
-			}
+            background-color: var(--background-light);
+            padding-bottom: 15px;
+            overflow-y: visible !important;  /* Alterado de auto para visible */
+            min-height: auto !important;      /* Removido restrição de altura mínima */
+            height: auto !important;          /* Garantir que a altura seja automática */
+        }
 
-		/* Garantir que o container principal não imponha restrições */
-		.main-container {
-    		height: auto !important;
-    		min-height: auto !important;
-    		overflow: visible !important;
-		}
+        /* Garantir que o container principal não imponha restrições */
+        .main-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+        }
 
-		/* Container principal do conteúdo */
-		.container.dashboard-spacing {
-    		overflow: visible !important;
-    		height: auto !important;
-		}
+        /* Container principal do conteúdo */
+        .container.dashboard-spacing {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+        }
 
-		/* Remover qualquer restrição de altura dos elementos pais */
-		.tab-content {
-    		overflow: visible !important;
-    		height: auto !important;
-		}
+        /* Remover qualquer restrição de altura dos elementos pais */
+        .tab-content {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+        }
 
-		/* Garantir que as tabelas possam expandir */
-		.table-container {
-		    height: auto !important;
-		}
+        /* Garantir que as tabelas possam expandir */
+        .table-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+        }
 
-		/* Corrigir o container das tabelas com cabeçalho fixo */
-		.table-fixed-header-container {
-    		max-height: 500px; /* Mantém o limite apenas para a tabela, não para a página */
-		}
-		
-        /* Espaçamento antes do dashboard */
-        .dashboard-spacing {
-            margin-top: 30px;
+        /* Corrigir o container das tabelas com cabeçalho fixo */
+        .table-fixed-header-container {
+            max-height: 500px; /* Mantém o limite apenas para a tabela, não para a página */
+            overflow-y: auto; /* Scroll apenas na tabela, não na página toda */
         }
         
         /* ==================== HEADER PRINCIPAL ==================== */
@@ -89,6 +89,8 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             border-bottom: 4px solid var(--accent-blue);
             flex-shrink: 0; /* EVITA QUE O HEADER ENCOLHA */
+            position: relative;
+            z-index: 1;
         }
         
         .logo-container {
@@ -230,6 +232,10 @@
             border-top-color: var(--secondary-orange);
         }
         
+        .metric-card.teal {
+            border-top-color: var(--secondary-teal);
+        }
+        
         .metric-value {
             font-size: 24px;
             font-weight: 700;
@@ -338,7 +344,7 @@
         .table-fixed-header-container {
             position: relative;
             max-height: 500px;
-            overflow: auto;
+            overflow-y: auto;
             padding: 0;
         }
         
@@ -486,18 +492,18 @@
             text-align: left;
         }
 
-	/* Adicione isso ao seu CSS, se já não existir */
-	#visaoGeralTable .quantidade,
-	#acordosTable .quantidade {
-    		text-align: center !important;
-    		font-weight: 600;
-	}
+        /* Adicione isso ao seu CSS, se já não existir */
+        #visaoGeralTable .quantidade,
+        #acordosTable .quantidade {
+            text-align: center !important;
+            font-weight: 600;
+        }
 
-	/* E também para as células do rodapé */
-	.table-total-row td.quantidade {
-    		text-align: center !important;
-    		font-weight: 600;
-	}
+        /* E também para as células do rodapé */
+        .table-total-row td.quantidade {
+            text-align: center !important;
+            font-weight: 600;
+        }
         
         /* Coluna de ações na tabela */
         .actions-column {
@@ -1209,8 +1215,50 @@
             flex-grow: 1;
         }
         
+        /* ==================== CORREÇÕES ESPECÍFICAS PARA SCROLL ==================== */
+        
+        /* REMOVER scroll da tabela quando não é necessário */
+        .table-fixed-header-container:has(table tbody tr:only-child),
+        .table-fixed-header-container:has(table tbody tr:first-child:last-child) {
+            max-height: none !important;
+            overflow-y: visible !important;
+        }
+        
+        /* Quando há poucas linhas, não mostrar scroll */
+        .table-fixed-header-container:has(table tbody tr:nth-child(10)) {
+            max-height: none;
+            overflow-y: visible;
+        }
+        
+        /* Container principal - garantir que expanda */
+        #dashboardTabsContent {
+            overflow: visible !important;
+            min-height: 0 !important;
+        }
+        
+        /* Cada dashboard individual */
+        .tab-pane {
+            overflow: visible !important;
+            height: auto !important;
+            min-height: 0 !important;
+        }
+        
         /* ==================== RESPONSIVIDADE ==================== */
         @media (max-width: 768px) {
+            body {
+                overflow-y: visible !important;
+            }
+            
+            .main-container, 
+            .container.dashboard-spacing,
+            .tab-content {
+                overflow: visible !important;
+            }
+            
+            .table-fixed-header-container {
+                max-height: 400px; /* Um pouco menor em mobile */
+            }
+            
             .main-header {
                 padding: 15px 0;
                 margin-bottom: 20px;
@@ -1322,6 +1370,10 @@
         }
         
         @media (max-width: 576px) {
+            .table-fixed-header-container {
+                max-height: 350px;
+            }
+            
             .filter-container .row > div {
                 margin-bottom: 10px;
             }
@@ -1863,7 +1915,7 @@
                                 
                                 <div class="alert alert-success mt-2">
                                     <i class="material-icons me-2">sync</i>
-                                    <strong>Atualização Automática:</strong> Os dados são atualizados automaticamente quando novos arquivos são adicionados ao repositório GitHub.
+                                    <strong>Atualização Automática:</strong> Os dados são atualizados automatically quando novos arquivos são adicionados ao repositório GitHub.
                                 </div>
                             </div>
                         </div>
@@ -1957,13 +2009,50 @@
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
             loadInitialData();
-            updateDataAtualizacao(); // CHAMAR IMEDIATAMENTE
+            setupIframeResizeObserver(); // Adicionado
+            updateDataAtualizacao();
             console.log('Painel de Acordos de Cooperação Técnica carregado com sucesso!!!');
             iframeUpdateHeight();
+            
+            // Atualizar altura quando trocar de aba
+            const tabs = document.querySelectorAll('[data-bs-toggle="tab"]');
+            tabs.forEach(tab => {
+                tab.addEventListener('shown.bs.tab', function() {
+                    setTimeout(iframeUpdateHeight, 300);
+                });
+            });
         });
 
         function iframeUpdateHeight() { 
-            window.parent.postMessage({ iframeHeight: document.body.scrollHeight }, '*'); 
+            // Esperar um pouco para garantir que o conteúdo tenha sido renderizado
+            setTimeout(() => {
+                const alturaTotal = document.documentElement.scrollHeight;
+                window.parent.postMessage({ 
+                    type: 'iframeHeight',
+                    height: alturaTotal,
+                    source: 'acordos-cooperacao'
+                }, '*');
+                console.log('Altura do iframe atualizada:', alturaTotal, 'px');
+            }, 100);
+        }
+
+        function setupIframeResizeObserver() {
+            // Observar mudanças no conteúdo que podem alterar a altura
+            const resizeObserver = new ResizeObserver(() => {
+                iframeUpdateHeight();
+            });
+            
+            // Observar o container principal
+            const mainContainer = document.querySelector('.main-container');
+            if (mainContainer) {
+                resizeObserver.observe(mainContainer);
+            }
+            
+            // Observar mudanças nas tabelas
+            const tables = document.querySelectorAll('.table-container');
+            tables.forEach(table => {
+                resizeObserver.observe(table);
+            });
         }
 
         // ==================== FUNÇÕES DE UTILIDADE ====================
@@ -2046,15 +2135,19 @@
             
             // Troca de abas
             document.getElementById('dashboard1-tab').addEventListener('click', function() {
-                setTimeout(updateDashboard1, 100);
-                iframeUpdateHeight();
+                setTimeout(() => {
+                    updateDashboard1();
+                    iframeUpdateHeight();
+                }, 100);
             });
             document.getElementById('dashboard2-tab').addEventListener('click', function() {
-                setTimeout(updateDashboard2, 100);
-                iframeUpdateHeight();
+                setTimeout(() => {
+                    updateDashboard2();
+                    iframeUpdateHeight();
+                }, 100);
             });
             document.getElementById('dashboard3-tab').addEventListener('click', function() {
-                iframeUpdateHeight();
+                setTimeout(iframeUpdateHeight, 100);
             });
             
             // Itens por página
