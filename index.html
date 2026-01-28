@@ -39,10 +39,42 @@
         /* ==================== ESTILOS GERAIS ==================== */
         body {
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background-light);
-            padding-bottom: 15px;
-        }
-        
+    		background-color: var(--background-light);
+    		padding-bottom: 15px;
+    		overflow-y: auto;  
+   	 		min-height: 100vh; 
+    		height: auto;    
+			}
+
+		/* Garantir que o container principal não imponha restrições */
+		.main-container {
+    		height: auto !important;
+    		min-height: auto !important;
+    		overflow: visible !important;
+		}
+
+		/* Container principal do conteúdo */
+		.container.dashboard-spacing {
+    		overflow: visible !important;
+    		height: auto !important;
+		}
+
+		/* Remover qualquer restrição de altura dos elementos pais */
+		.tab-content {
+    		overflow: visible !important;
+    		height: auto !important;
+		}
+
+		/* Garantir que as tabelas possam expandir */
+		.table-container {
+		    height: auto !important;
+		}
+
+		/* Corrigir o container das tabelas com cabeçalho fixo */
+		.table-fixed-header-container {
+    		max-height: 500px; /* Mantém o limite apenas para a tabela, não para a página */
+		}
+		
         /* Espaçamento antes do dashboard */
         .dashboard-spacing {
             margin-top: 30px;
@@ -1927,7 +1959,6 @@
             loadInitialData();
             updateDataAtualizacao(); // CHAMAR IMEDIATAMENTE
             console.log('Painel de Acordos de Cooperação Técnica carregado com sucesso!!!');
-
             iframeUpdateHeight();
         });
 
