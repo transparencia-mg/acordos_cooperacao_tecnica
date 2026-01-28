@@ -48,17 +48,15 @@
         body {
             font-family: 'Montserrat', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light);
-            overflow-y: auto; /* PERMITIR ROLAGEM APENAS DENTRO DO CONTAINER */
             height: 100vh;
             display: flex;
             flex-direction: column;
         }
         
         .main-container {
-            flex: 1;
-            overflow-y: auto; /* CONTAINER PRINCIPAL COM ROLAGEM */
-            padding-bottom: 30px;
-        }
+    		height: auto;
+    		overflow: visible;  /* ✅ */
+		}
         
         .container {
             max-width: 100%;
